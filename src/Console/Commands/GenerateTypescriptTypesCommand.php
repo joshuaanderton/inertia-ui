@@ -33,7 +33,8 @@ class GenerateTypescriptTypesCommand extends Command
     public function handle()
     {
         $modelFilenames = File::files(app_path('Models'));
-        $outputFilePath = inertia_ui_path('resources/js/model-types.ts');
+        // $outputFilePath = inertia_ui_path('resources/js/model-types.ts');
+        $outputFilePath = base_path('resources/js/model-types.ts');
 
         $content = collect();
 
