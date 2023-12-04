@@ -6,7 +6,7 @@ import { createInertiaApp } from '@inertiajs/react'
 import useRoute, { RouteContext } from '@inertia-ui/Hooks/useRoute'
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers'
 
-const appName: string = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel',
+const appName: string = document.getElementsByTagName('title')[0]?.innerText || 'Laravel',
       appEl = document.getElementById('app')!,
       defaultPage = {component: 'Dashboard', url: '/', props: {jetstream: {}, auth: {user: {current_team_id: 1}, ziggy: {url: 'http://127.0.0.1:8001', port: 8001, location: 'http://127.0.0.1:8001'}}}}
 
