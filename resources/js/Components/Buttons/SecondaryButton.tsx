@@ -1,5 +1,5 @@
 import React from 'react'
-import DefaultButton, { DefaultButtonProps } from '@inertia-ui/Components/DefaultButton'
+import DefaultButton, { DefaultButtonProps } from './DefaultButton'
 import classNames from 'classnames'
 
 const SecondaryButton: React.FC<DefaultButtonProps> = ({ className, ...props }) => (

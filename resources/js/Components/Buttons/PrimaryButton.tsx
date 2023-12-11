@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-import DefaultButton, { DefaultButtonProps } from '../DefaultButton'
+import DefaultButton, { DefaultButtonProps } from './DefaultButton'
 
 const PrimaryButton: React.FC<DefaultButtonProps> = ({ className, ...props }) => (
   <DefaultButton className={classNames([
