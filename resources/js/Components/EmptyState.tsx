@@ -2,7 +2,7 @@ import React from 'react'
 import { ArrowRightIcon, PlusIcon } from '@heroicons/react/20/solid'
 import { FolderPlusIcon } from '@heroicons/react/24/outline'
 import { lang as __ } from '@inertia-ui/Hooks/useLang'
-import PrimaryButton from '@/Components/Buttons/PrimaryButton'
+import PrimaryButton from '@inertia-ui/Components/Buttons/PrimaryButton'
 import classNames from 'classnames'
 
 interface Props {

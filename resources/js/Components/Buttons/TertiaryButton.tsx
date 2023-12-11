@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-import DefaultButton, { DefaultButtonProps } from '@/Components/DefaultButton'
+import DefaultButton, { DefaultButtonProps } from '@inertia-ui/Components/DefaultButton'
 
 interface TertiaryButtonProps extends DefaultButtonProps { light?: boolean }
 

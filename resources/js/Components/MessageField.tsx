@@ -1,7 +1,7 @@
 import React from 'react'
 import { lang as __ } from '@inertia-ui/Hooks/useLang'
 import { PaperClipIcon } from '@heroicons/react/20/solid'
-import PrimaryButton from '@/Components/Buttons/PrimaryButton'
+import PrimaryButton from '@inertia-ui/Components/Buttons/PrimaryButton'
 import classNames from 'classnames'
 import InputLabel from './InputLabel'
 

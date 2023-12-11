@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Switch } from '@headlessui/react'
 import classNames from 'classnames'
-import InputLabel from '@/Components/InputLabel'
+import InputLabel from '@inertia-ui/Components/InputLabel'
 
 interface Props {
   enabled?: boolean

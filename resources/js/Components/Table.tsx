@@ -1,7 +1,7 @@
 import React, { useLayoutEffect, useRef, useState } from 'react'
 import classNames from 'classnames'
 import { lang as __ } from '@inertia-ui/Hooks/useLang'
-import Heading from '@/Components/Heading'
+import Heading from '@inertia-ui/Components/Heading'
 
 interface Props {
   columns?: Array<string|null>
