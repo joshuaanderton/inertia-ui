@@ -1,28 +1,32 @@
 import React, { useState } from 'react'
 import Dropdown, { DropdownProps } from '@inertia-ui/Components/Dropdown'
 import DropdownLink from '@inertia-ui/Components/DropdownLink'
-import useTypedPage from '@inertia-ui/Hooks/useTypedPage'
 import { lang as __ } from '@inertia-ui/Hooks/useLang'
 
+interface Category {
+  id: number,
+  name: string
+}
+
 interface Props extends DropdownProps {
-  value?: string|null
-  onChange: (category: { id: string, slug: string, title: string }) => void
+  categories: Category[]
+  value?: number|null
+  onChange: (category: Category) => void
   placeholder?: string
 }
 
-const CategoriesDropdown: React.FC<Props> = ({ value, onChange, placeholder, className, ...props }) => {
+const CategoriesDropdown: React.FC<Props> = ({ categories, value, onChange, placeholder, className, ...props }) => {
 
-  const { categories } = useTypedPage<{ categories: { id: string, slug: string, title: string }[] }>().props,
-        [currentCategory, setCurrentCategory] = useState(value ? categories.find(c => c.slug === value) : null)
+  const [currentCategory, setCurrentCategory] = useState(value ? categories.find(c => c.id === value) : null)
 
   return (
-    <Dropdown triggerText={currentCategory?.title || placeholder || __('Categories')} {...props}>
+    <Dropdown triggerText={currentCategory?.name || placeholder || __('Categories')} {...props}>
       {categories.map(category => (
-        <DropdownLink key={category.slug} as="button" type="button" onClick={() => {
+        <DropdownLink key={category.id} as="button" type="button" onClick={() => {
           setCurrentCategory(category)
           onChange(category)
         }}>
-          {category.title}
+          {category.name}
         </DropdownLink>
       ))}
     </Dropdown>
