@@ -69,7 +69,7 @@ const DefaultButton: React.FC<DefaultButtonProps> = ({
     'border',
     'border-transparent',
     'rounded',
-    'text-white',
+    // 'text-white',
     'transition',
     'ease-in-out',
     'focus:outline-none',

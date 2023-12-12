@@ -5,8 +5,10 @@ import Heading from '@inertia-ui/Components/Heading'
 
 interface Props {
   columns?: Array<string|null>
+  footerColumns?: Array<string|null>
   rows: Array<string|number|(() => JSX.Element)>[]
   preSelectedRows?: number[]
+  fixedHeader?: boolean
   bulkActions?(): JSX.Element
   onSelect?: (selectedRows: number[]) => void
   className?: string
@@ -14,10 +16,12 @@ interface Props {
 
 const Table: React.FC<Props> = ({
   columns,
+  footerColumns,
   rows,
   preSelectedRows,
   bulkActions,
   onSelect,
+  fixedHeader = false,
   className = ''
 }) => {
 
@@ -47,18 +51,18 @@ const Table: React.FC<Props> = ({
   }
 
   return (
-    <div className={classNames('relative -mx-3 overflow-x-scroll', className)}>
+    <div className={classNames('h-full relative -mx-3 overflow-scroll', className)}>
       {selectedRows.length > 0 && typeof bulkActions !== 'boolean' && (
         <div className="absolute left-14 top-2 flex h-9 items-center space-x-3 site-bg sm:left-12">
           {bulkActions?.()}
         </div>
       )}
-      <table className="min-w-full table-fixed divide-y site-divide-color">
+      <table className="relative min-w-full table-fixed divide-y site-divide-color">
         {columns && (
           <thead>
             <tr>
               {bulkActions && (
-                <th scope="col" className="relative px-7 sm:w-12 sm:px-6">
+                <th scope="col" className="z-10 sticky top-0 bg-chrome-100 px-7 sm:w-12 sm:px-6">
                   <input
                     type="checkbox"
                     className="hover:cursor-pointer absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded site-border-color text-primary-600 focus:ring-primary-600"
@@ -69,7 +73,7 @@ const Table: React.FC<Props> = ({
                 </th>
               )}
               {columns.map((column, columnIndex) => (
-                <th key={columnIndex} scope="col" className="py-3.5 px-3 text-left text-sm font-semibold">
+                <th key={columnIndex} scope="col" className="z-10 sticky top-0 bg-chrome-100 py-3.5 px-3 text-left text-sm font-semibold">
                   {column !== null && <Heading title={column} type="h4" size="sm" className="whitespace-nowrap" />}
                 </th>
               ))}
@@ -110,6 +114,20 @@ const Table: React.FC<Props> = ({
             </tr>
           ))}
         </tbody>
+        {footerColumns && (
+          <thead>
+            <tr>
+              {bulkActions && (
+                <th scope="col" className="z-10 sticky bottom-0 bg-chrome-100 px-7 sm:w-12 sm:px-6"></th>
+              )}
+              {footerColumns.map((column, columnIndex) => (
+                <th key={columnIndex} scope="col" className="z-10 sticky bottom-0 bg-chrome-100 py-3.5 px-3 text-left text-sm font-semibold">
+                  {column}
+                </th>
+              ))}
+            </tr>
+          </thead>
+        )}
       </table>
     </div>
   )
