@@ -5,8 +5,8 @@ import Heading from '@inertia-ui/Components/Heading'
 import { Link } from '@inertiajs/react'
 
 interface Props {
-  columns?: Array<string|null>
-  headerRow?: Array<string|null>
+  columns?: Array<string|null|{title?: string, className?: string}>
+  headerRow?: Array<string|null|{title?: string, className?: string}>
   rows: Array<string|number|(() => JSX.Element)>[]
   rowIdColumnIndex?: number
   footerRow?: Array<string|null>
@@ -71,9 +71,11 @@ const Table: React.FC<Props> = ({
     <div className={classNames('flex-1 flex flex-col overflow-scroll px-3', className)}>
       <div className="flex-1 -mx-3">
         <table className="relative min-w-full table-fixed divide-y site-divide-color border-b site-border-color">
+
           {headerRow && (
             <thead>
               <tr>
+
                 {bulkActions && (
                   <th scope="col" className={classNames({'sticky top-0 z-10 bg-chrome-100': fixedHeader}, 'px-7 sm:w-12 sm:px-6')}>
                     <input
@@ -85,16 +87,45 @@ const Table: React.FC<Props> = ({
                     />
                   </th>
                 )}
-                {headerRow.map((column, columnIndex) => (
-                  <th key={`${columnIndex}-header`} scope="col" className={classNames({'sticky top-0 z-10 bg-chrome-100': fixedHeader}, 'py-3.5 px-3 text-left text-sm font-semibold')}>
-                    {columnIndex === 0 && selectedRows.length > 0 && typeof bulkActions !== 'boolean' && (
-                      <div className="absolute top-2 z-20 flex items-center space-x-3">
-                        {bulkActions?.()}
-                      </div>
-                    )}
-                    {column !== null && <Heading title={column} type="h4" size="sm" className="whitespace-nowrap" />}
-                  </th>
-                ))}
+
+                {headerRow.map((column, columnIndex) => {
+
+                  let columnTitle: string|null,
+                      columnClassName = classNames({
+                        'sticky top-0 z-10 bg-chrome-100': fixedHeader
+                      }, [
+                        'py-3.5',
+                        'px-3',
+                        'text-left',
+                        'text-sm',
+                        'font-semibold'
+                      ], (column as any)?.className || null)
+
+                  if (!column) {
+                    columnTitle = null
+                  } else if (typeof column === 'object') {
+                    columnTitle = column.title || null
+                  } else {
+                    columnTitle = column
+                  }
+
+                  return (
+                    <th key={`${columnIndex}-header`} scope="col" className={columnClassName}>
+
+                      {columnIndex === 0 && selectedRows.length > 0 && typeof bulkActions !== 'boolean' && (
+                        <div className="absolute top-2 z-20 flex items-center space-x-3">
+                          {bulkActions?.()}
+                        </div>
+                      )}
+
+                      {columnTitle && (
+                        <Heading title={columnTitle} type="h4" size="sm" className="whitespace-nowrap" />
+                      )}
+
+                    </th>
+                  )
+                })}
+
               </tr>
             </thead>
           )}
