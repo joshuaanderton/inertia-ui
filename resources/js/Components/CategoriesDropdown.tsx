@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import Dropdown, { DropdownProps } from '@inertia-ui/Components/Dropdown'
 import DropdownLink from '@inertia-ui/Components/DropdownLink'
 import { lang as __ } from '@inertia-ui/Hooks/useLang'
+import TextInput from './TextInput'
 
 interface Category {
   id: number,
@@ -17,11 +18,15 @@ interface Props extends DropdownProps {
 
 const CategoriesDropdown: React.FC<Props> = ({ categories, value, onChange, placeholder, className, ...props }) => {
 
-  const [currentCategory, setCurrentCategory] = useState(value ? categories.find(c => c.id === value) : null)
+  const [currentCategory, setCurrentCategory] = useState(categories.find(c => c.id === value) || null),
+        [query, setQuery] = useState('')
 
   return (
     <Dropdown triggerText={currentCategory?.name || placeholder || __('Categories')} {...props}>
-      {categories.map(category => (
+
+      {/* <TextInput value={query} onChange={event => setQuery(event.currentTarget.value)} /> */}
+
+      {categories.filter(cat => query.length === 0 || cat.name.toLowerCase().includes(query)).map(category => (
         <DropdownLink key={category.id} as="button" type="button" onClick={() => {
           setCurrentCategory(category)
           onChange(category)
@@ -29,6 +34,7 @@ const CategoriesDropdown: React.FC<Props> = ({ categories, value, onChange, plac
           {category.name}
         </DropdownLink>
       ))}
+
     </Dropdown>
   )
 }

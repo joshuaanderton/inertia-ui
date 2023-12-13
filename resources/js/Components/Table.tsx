@@ -6,8 +6,10 @@ import { Link } from '@inertiajs/react'
 
 interface Props {
   columns?: Array<string|null>
-  footerColumns?: Array<string|null>
+  headerRow?: Array<string|null>
   rows: Array<string|number|(() => JSX.Element)>[]
+  rowIdColumnIndex?: number
+  footerRow?: Array<string|null>
   preSelectedRows?: number[]
   fixedHeader?: boolean
   pagination?: any
@@ -18,8 +20,10 @@ interface Props {
 
 const Table: React.FC<Props> = ({
   columns,
-  footerColumns,
   rows,
+  rowIdColumnIndex,
+  headerRow,
+  footerRow,
   preSelectedRows,
   pagination,
   bulkActions,
@@ -37,6 +41,8 @@ const Table: React.FC<Props> = ({
           !(link.label.includes('Next') && pagination.next_page_url === null)
         ))
 
+  headerRow = headerRow || columns
+
   useLayoutEffect(() => {
     const isIndeterminate = selectedRows.length > 0 && selectedRows.length < rows.length
     setChecked(selectedRows.length === rows.length)
@@ -48,7 +54,11 @@ const Table: React.FC<Props> = ({
   }, [selectedRows])
 
   const toggleAll = () => {
-    setSelectedRows(checked || indeterminate ? [] : rows.map((_, index) => index))
+    setSelectedRows(checked || indeterminate ? [] : rows.map((rowColumns, rowIndex) => (
+      rowIdColumnIndex !== undefined && !!rowColumns[rowIdColumnIndex]
+        ? rowColumns[rowIdColumnIndex] as number
+        : rowIndex
+    )))
     setChecked(!checked && !indeterminate)
     setIndeterminate(false)
   }
@@ -58,21 +68,14 @@ const Table: React.FC<Props> = ({
   }
 
   return (
-    <div className={classNames('h-full relative -mx-3 overflow-hidden', className)}>
-      <div className="h-12 p-1.5">
-        {selectedRows.length > 0 && typeof bulkActions !== 'boolean' && (
-          <div className="relative z-20 flex items-center space-x-3">
-            {bulkActions?.()}
-          </div>
-        )}
-      </div>
-      <div className="h-full overflow-scroll">
-        <table className="relative min-w-full table-fixed divide-y site-divide-color">
-          {columns && (
+    <div className={classNames('flex-1 flex flex-col overflow-scroll px-3', className)}>
+      <div className="flex-1 -mx-3">
+        <table className="relative min-w-full table-fixed divide-y site-divide-color border-b site-border-color">
+          {headerRow && (
             <thead>
               <tr>
                 {bulkActions && (
-                  <th scope="col" className="z-10 sticky top-0 bg-chrome-100 px-7 sm:w-12 sm:px-6">
+                  <th scope="col" className={classNames({'sticky top-0 z-10 bg-chrome-100': fixedHeader}, 'px-7 sm:w-12 sm:px-6')}>
                     <input
                       type="checkbox"
                       className="hover:cursor-pointer absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded site-border-color text-primary-600 focus:ring-primary-600"
@@ -82,65 +85,81 @@ const Table: React.FC<Props> = ({
                     />
                   </th>
                 )}
-                {columns.map((column, columnIndex) => (
-                  <th key={columnIndex} scope="col" className="z-10 sticky top-0 bg-chrome-100 py-3.5 px-3 text-left text-sm font-semibold">
+                {headerRow.map((column, columnIndex) => (
+                  <th key={`${columnIndex}-header`} scope="col" className={classNames({'sticky top-0 z-10 bg-chrome-100': fixedHeader}, 'py-3.5 px-3 text-left text-sm font-semibold')}>
+                    {columnIndex === 0 && selectedRows.length > 0 && typeof bulkActions !== 'boolean' && (
+                      <div className="absolute top-2 z-20 flex items-center space-x-3">
+                        {bulkActions?.()}
+                      </div>
+                    )}
                     {column !== null && <Heading title={column} type="h4" size="sm" className="whitespace-nowrap" />}
                   </th>
                 ))}
               </tr>
             </thead>
           )}
+
           <tbody className="divide-y site-divide-color">
-            {rows.map((rowColumns, rowIndex) => (
-              <tr key={rowIndex} className={selectedRows.includes(rowIndex) ? 'bg-black/5' : undefined}>
-                {bulkActions && (
-                  <td className="relative px-7 sm:w-12 sm:px-6">
-                    {selectedRows.includes(rowIndex) && (
-                      <div className="absolute inset-y-0 left-0 w-0.5 bg-primary-600" />
-                    )}
-                    <input
-                      type="checkbox"
-                      className="hover:cursor-pointer absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded site-border-color text-primary-600 focus:ring-primary-600"
-                      value={rowIndex}
-                      checked={selectedRows.includes(rowIndex)}
-                      onChange={(event: any) =>
-                        setSelectedRows(
-                          event.target.checked
-                            ? [...selectedRows, rowIndex]
-                            : selectedRows.filter((index) => index !== rowIndex)
-                        )
-                      }
-                    />
-                  </td>
-                )}
-                {rowColumns.map((rowColumn, rowColumnIndex) => (
-                  <td key={rowColumnIndex} scope="col" className={classNames(
-                    rowColumnIndex === 0 ? 'font-semibold' : 'font-normal',
-                    'py-3.5 px-3 text-left text-sm whitespace-nowrap'
-                  )}>
-                    {typeof rowColumn === 'function' ? rowColumn() : rowColumn}
-                  </td>
-                ))}
-              </tr>
-            ))}
+            {rows.map((rowColumns, rowIndex) => {
+
+              const id = rowIdColumnIndex !== undefined && !!rowColumns[rowIdColumnIndex]
+                ? rowColumns[rowIdColumnIndex] as number
+                : rowIndex
+
+              return (
+                <tr key={id} className={selectedRows.includes(id) ? 'bg-black/5' : undefined}>
+                  {bulkActions && (
+                    <td className="relative px-7 sm:w-12 sm:px-6">
+                      {selectedRows.includes(id) && (
+                        <div className="absolute inset-y-0 left-0 w-0.5 bg-primary-600" />
+                      )}
+                      <input
+                        type="checkbox"
+                        className="hover:cursor-pointer absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded site-border-color text-primary-600 focus:ring-primary-600"
+                        value={id}
+                        checked={selectedRows.includes(id)}
+                        onChange={(event: any) =>
+                          setSelectedRows(
+                            event.target.checked
+                              ? [...selectedRows, id]
+                              : selectedRows.filter((index) => index !== id)
+                          )
+                        }
+                      />
+                    </td>
+                  )}
+                  {rowColumns.filter((_, rowColIdx) => rowIdColumnIndex === undefined || rowColIdx !== rowIdColumnIndex).map((rowColumn, rowColumnIndex) => (
+                    <td key={rowColumnIndex} scope="col" className={classNames(
+                      rowColumnIndex === 0 ? 'font-semibold' : 'font-normal',
+                      'py-3.5 px-3 text-left text-sm whitespace-nowrap'
+                    )}>
+                      {typeof rowColumn === 'function' ? rowColumn() : rowColumn}
+                    </td>
+                  ))}
+                </tr>
+              )
+            })}
           </tbody>
-          {footerColumns && (
-            <thead>
+
+          {footerRow && (
+            <tfoot>
               <tr>
                 {bulkActions && (
                   <th scope="col" className="z-10 sticky bottom-0 bg-chrome-100 px-7 sm:w-12 sm:px-6"></th>
                 )}
-                {footerColumns.map((column, columnIndex) => (
-                  <th key={columnIndex} scope="col" className="z-10 sticky bottom-0 bg-chrome-100 py-3.5 px-3 text-left text-sm font-semibold">
+                {footerRow.map((column, columnIndex) => (
+                  <th key={`${columnIndex}-footer`} scope="col" className="z-10 sticky bottom-0 bg-chrome-100 py-3.5 px-3 text-left text-sm font-semibold">
                     {column}
                   </th>
                 ))}
               </tr>
-            </thead>
+            </tfoot>
           )}
+
         </table>
+
         {pagination && (
-          <div className="border-t site-border-color py-3.5 px-3 flex justify-between">
+          <div className="w-full p-3 gap-x-3 flex whitespace-nowrap flex-nowrap justify-between">
             <span className="site-text-muted text-sm font-medium">
               {__('Showing')} {pagination.data.length} {__('of')} {pagination.total}
             </span>

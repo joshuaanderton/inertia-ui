@@ -8,6 +8,7 @@ export interface DropdownProps extends PropsWithChildren {
   className?: string
   triggerClassName?: string
   triggerText?: string|(() => JSX.Element)
+  triggerToggle?: boolean
   renderTrigger?: () => JSX.Element
   disabled?: boolean
   tooltip?: string
@@ -18,6 +19,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   className,
   triggerClassName,
   triggerText,
+  triggerToggle = true,
   disabled,
   renderTrigger,
   tooltip,
@@ -42,7 +44,7 @@ const Dropdown: React.FC<DropdownProps> = ({
             disabled={disabled}
             data-tooltip-content={tooltip}
             data-tooltip-place="bottom"
-            toggle
+            toggle={triggerToggle}
           >
             {typeof triggerText === 'string' ? triggerText : triggerText()}
           </SecondaryButton>
@@ -65,7 +67,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         leaveTo="transform opacity-0 scale-95"
         className={'relative z-50'}
       >
-        <div className={className} onClick={() => setOpen(false)}>
+        <div className={className}> {/* onClick={() => setOpen(false)}> */}
           <div className="rounded ring-1 ring-black ring-opacity-5 py-1 bg-white dark:bg-chrome-900">
             {children}
           </div>
