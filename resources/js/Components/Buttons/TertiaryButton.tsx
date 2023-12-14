@@ -1,8 +1,8 @@
 import React from 'react'
 import classNames from 'classnames'
-import DefaultButton, { DefaultButtonProps } from '@inertia-ui/Components/DefaultButton'
+import DefaultButton, { DefaultButtonProps } from '@inertia-ui/Components/Buttons/DefaultButton'
 
-interface TertiaryButtonProps extends DefaultButtonProps { light?: boolean }
+interface TertiaryButtonProps extends DefaultButtonProps { light?: boolean, className?: string }
 
 const TertiaryButton: React.FC<TertiaryButtonProps> = ({ light = false, className, ...props }) => {
 
