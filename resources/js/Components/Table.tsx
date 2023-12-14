@@ -32,6 +32,10 @@ const Table: React.FC<Props> = ({
   className = ''
 }) => {
 
+  const searchParams = new URL(window.location.href).searchParams
+
+  searchParams.delete('page')
+
   const [selectedRows, setSelectedRows] = useState<any[]>(preSelectedRows || []),
         checkbox = useRef<HTMLInputElement>(null),
         [checked, setChecked] = useState(false),
@@ -77,7 +81,7 @@ const Table: React.FC<Props> = ({
               <tr>
 
                 {bulkActions && (
-                  <th scope="col" className={classNames({'sticky top-0 z-10 bg-chrome-100': fixedHeader}, 'px-7 sm:w-12 sm:px-6')}>
+                  <th scope="col" className={classNames({'sticky top-0 z-10 bg-gradient-to-t from-chrome-100 to-white': fixedHeader}, 'px-7 sm:w-12 sm:px-6')}>
                     <input
                       type="checkbox"
                       className="hover:cursor-pointer absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded site-border-color text-primary-600 focus:ring-primary-600"
@@ -92,7 +96,7 @@ const Table: React.FC<Props> = ({
 
                   let columnTitle: string|null,
                       columnClassName = classNames({
-                        'sticky top-0 z-10 bg-chrome-100': fixedHeader
+                        'sticky top-0 z-10 bg-gradient-to-t from-chrome-100 to-white': fixedHeader
                       }, [
                         'py-3.5',
                         'px-3',
@@ -198,7 +202,7 @@ const Table: React.FC<Props> = ({
               {paginationLinks.map((link: any, index: number) => (
                 <span key={link.label+index}>
                   {pagination.links.current_page != link.label && link.label !== '...' ? (
-                    <Link href={link.url} className="px-3 site-text-muted">
+                    <Link href={`${link.url}&${searchParams.toString()}`} className="px-3 site-text-muted">
                       <span dangerouslySetInnerHTML={{ __html: link.label }} />
                     </Link>
                   ) : (
