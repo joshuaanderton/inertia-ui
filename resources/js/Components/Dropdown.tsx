@@ -1,7 +1,7 @@
 import { Transition } from '@headlessui/react'
 import classNames from 'classnames'
 import React, { PropsWithChildren, useState } from 'react'
-import SecondaryButton from './Buttons/SecondaryButton'
+import SecondaryButton from '@inertia-ui/Components/Buttons/SecondaryButton'
 
 export interface DropdownProps extends PropsWithChildren {
   right?: boolean
