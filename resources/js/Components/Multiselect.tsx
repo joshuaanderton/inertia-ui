@@ -57,7 +57,7 @@ const Multiselect: React.FC<Props> = ({ value, options = [], onChange, label, pl
             <InputLabel as="span" value={label} />
           </Combobox.Label>
         )}
-        <div className="site-input min-h-[1.5rem] focus-within:ring-2 focus-within:ring-primary-500 relative flex items-center w-full">
+        <div className="site-input min-h-[1.5rem] max-h-[10rem] overflow-scroll focus-within:ring-2 focus-within:ring-primary-500 relative flex items-center w-full">
 
           {/* Preview Tags */}
           <div className={classNames('px-2 py-1.5 flex items-center gap-1.5', wrapOptions ? 'flex-wrap' : '')}>

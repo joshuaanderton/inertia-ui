@@ -5,8 +5,7 @@ import Heading from '@inertia-ui/Components/Heading'
 import { Link } from '@inertiajs/react'
 
 interface Props {
-  columns?: Array<string|null|{title?: string, className?: string}>
-  headerRow?: Array<string|null|{title?: string, className?: string}>
+  columns: Array<string|null|{title?: string, className?: string, mobile?: boolean}>
   rows: Array<string|number|(() => JSX.Element)>[]
   rowIdColumnIndex?: number
   footerRow?: Array<string|null>
@@ -22,7 +21,6 @@ const Table: React.FC<Props> = ({
   columns,
   rows,
   rowIdColumnIndex,
-  headerRow,
   footerRow,
   preSelectedRows,
   pagination,
@@ -44,8 +42,6 @@ const Table: React.FC<Props> = ({
           !(link.label.includes('Previous') && pagination.prev_page_url === null) &&
           !(link.label.includes('Next') && pagination.next_page_url === null)
         ))
-
-  headerRow = headerRow || columns
 
   useLayoutEffect(() => {
     const isIndeterminate = selectedRows.length > 0 && selectedRows.length < rows.length
@@ -76,7 +72,7 @@ const Table: React.FC<Props> = ({
       <div className="flex-1 -mx-3">
         <table className="relative min-w-full table-fixed divide-y site-divide-color border-b site-border-color">
 
-          {headerRow && (
+          {columns && (
             <thead>
               <tr>
 
@@ -92,7 +88,7 @@ const Table: React.FC<Props> = ({
                   </th>
                 )}
 
-                {headerRow.map((column, columnIndex) => {
+                {columns.map((column, columnIndex) => {
 
                   let columnTitle: string|null,
                       columnClassName = classNames({
@@ -109,6 +105,7 @@ const Table: React.FC<Props> = ({
                     columnTitle = null
                   } else if (typeof column === 'object') {
                     columnTitle = column.title || null
+                    columnClassName = classNames(columnClassName, column.mobile !== undefined ? (column.mobile ? '' : '!hidden md:!table-cell') : '')
                   } else {
                     columnTitle = column
                   }
@@ -166,7 +163,11 @@ const Table: React.FC<Props> = ({
                   {rowColumns.filter((_, rowColIdx) => rowIdColumnIndex === undefined || rowColIdx !== rowIdColumnIndex).map((rowColumn, rowColumnIndex) => (
                     <td key={rowColumnIndex} scope="col" className={classNames(
                       rowColumnIndex === 0 ? 'font-semibold' : 'font-normal',
-                      'py-3.5 px-3 text-left text-sm whitespace-nowrap'
+                      'py-3.5 px-3 text-left text-sm whitespace-nowrap',
+                      (
+                        typeof columns[rowColumnIndex] === 'object' &&
+                        (columns[rowColumnIndex] as any).mobile !== undefined
+                      ) ? ((columns[rowColumnIndex] as any).mobile ? '' : '!hidden md:!table-cell') : ''
                     )}>
                       {typeof rowColumn === 'function' ? rowColumn() : rowColumn}
                     </td>
