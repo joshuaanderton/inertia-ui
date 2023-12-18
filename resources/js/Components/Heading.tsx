@@ -13,8 +13,8 @@ const Heading: React.FC<Props> = ({ title, size, type = "h3", className = '', ch
   return (
     <div className={classNames(
       {
-        'prose-sm': size === 'sm',
-        'prose-lg': size === 'lg',
+        'prose-xs md:prose-sm': size === 'sm',
+        'prose-sm md:prose-lg': size === 'lg',
       },
       [
         'prose',
