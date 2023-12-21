@@ -4,17 +4,16 @@ import DefaultButton, { DefaultButtonProps } from './DefaultButton'
 
 interface TertiaryButtonProps extends DefaultButtonProps { light?: boolean }
 
-const TertiaryButton: React.FC<TertiaryButtonProps> = ({ light = false, className, ...props }) => {
-
-  const lightDarkClassName = light
-    ? 'border-white text-white dark:border-black dark:text-black'
-    : 'border-black text-black dark:border-white dark:text-white'
+const TertiaryButton: React.FC<TertiaryButtonProps> = ({ className, ...props }) => {
 
   return (
     <DefaultButton
       {...props}
       className={classNames([
-        lightDarkClassName,
+        'border-black',
+        'text-black',
+        'dark:border-white',
+        'dark:text-white',
         'rounded-full',
         'bg-gradient-to-r',
         'hover:from-chrome-200',
