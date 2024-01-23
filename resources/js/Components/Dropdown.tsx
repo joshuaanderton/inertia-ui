@@ -8,6 +8,7 @@ export interface DropdownProps extends PropsWithChildren {
   className?: string
   triggerClassName?: string
   triggerText?: string|(() => JSX.Element)
+  triggerSize?: "base"|"sm"|"lg"|"xs"
   renderTrigger?: () => JSX.Element
   disabled?: boolean
   tooltip?: string
@@ -18,6 +19,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   className,
   triggerClassName,
   triggerText,
+  triggerSize,
   disabled,
   renderTrigger,
   tooltip,
@@ -38,6 +40,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         {renderTrigger ? renderTrigger?.() : triggerText && (
           <SecondaryButton
             type="button"
+            size={triggerSize}
             className={triggerClassName}
             disabled={disabled}
             data-tooltip-content={tooltip}
