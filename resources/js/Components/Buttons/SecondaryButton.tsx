@@ -9,7 +9,7 @@ const SecondaryButton: React.FC<DefaultButtonProps> = ({ className, ...props }) 
     'text-chrome-700',
     'dark:text-chrome-300',
     !props.disabled
-      ? 'hover:bg-chrome-50 dark:hover:bg-chrome-700'
+      ? 'hover:bg-chrome-300 dark:hover:bg-chrome-700'
       : null,
   ], className)} />
 )

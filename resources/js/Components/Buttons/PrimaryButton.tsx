@@ -4,6 +4,8 @@ import DefaultButton, { DefaultButtonProps } from '@inertia-ui/Components/Button
 
 const PrimaryButton: React.FC<DefaultButtonProps> = ({ className, ...props }) => (
   <DefaultButton className={classNames([
+    'text-white',
+    'dark:text-chrome-950',
     'bg-primary-800',
     'border-primary-800',
     'focus:bg-primary-700',

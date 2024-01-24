@@ -48,7 +48,7 @@ const BarChart: React.FC<BarsProps> = ({ dataset = [] }) => {
           <p className="text-lg site-text-muted">{__('No data for this range...')}</p>
         </div>
       )}
-      <div className={classNames((isEmpty ? '[&_*]:opacity-0' : ''), 'bg-chrome-200 dark:bg-chrome-900')}>
+      <div className={classNames((isEmpty ? '[&_*]:opacity-0' : ''), 'bg-chrome-300 dark:bg-chrome-900')}>
         <ScaleSVG width={width} height={height}>
           <Group top={yMargin / 2} left={xMargin / 2}>
             {dataset.map(({ label, value }) => {
