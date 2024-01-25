@@ -87,7 +87,7 @@ const Multiselect: React.FC<Props> = ({ value, options = [], onChange, label, pl
                 'min-w-32',
                 'overflow-auto',
                 'rounded-md',
-                'bg-white',
+                'bg-chrome-300',
                 'dark:bg-chrome-800',
                 'py-1',
                 'text-sm',
