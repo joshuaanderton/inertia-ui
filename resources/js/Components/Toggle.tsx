@@ -23,13 +23,13 @@ const Toggle: React.FC<Props> = ({ enabled, onChange, label, disabled = false, c
         disabled={disabled}
         checked={isEnabled}
         onChange={setIsEnabled}
-        className={`${isEnabled ? 'bg-primary' : 'bg-chrome-200 dark:bg-chrome-700'}
-          relative inline-flex h-[30px] w-[56px] shrink-0 cursor-pointer rounded-full border-[3px] border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus-visible:ring-2  focus-visible:ring-white focus-visible:ring-opacity-75`}
+        className={`${isEnabled ? 'bg-primary' : 'site-bg dark:bg-chrome-700'}
+        ring-1 ring-chrome-400 dark:ring-transparent relative inline-flex h-[30px] w-[56px] shrink-0 cursor-pointer rounded-full border-[3px] border-transparent transition-colors duration-200 ease-in-out focus:outline-none`}
       >
         <span
           aria-hidden="true"
           className={`${isEnabled ? 'translate-x-[26px]' : 'translate-x-0'}
-            pointer-events-none inline-block h-[24px] w-[24px] transform rounded-full bg-white dark:bg-chrome-950 shadow-lg ring-0 transition duration-200 ease-in-out`}
+            pointer-events-none inline-block h-[24px] w-[24px] transform rounded-full site-bg border site-border-color dark:bg-chrome-950 shadow-lg ring-0 transition duration-200 ease-in-out`}
         />
       </Switch>
 
