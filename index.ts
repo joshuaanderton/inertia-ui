@@ -6,29 +6,26 @@ import path from 'path'
  */
 export default () => ({
 
-  name: 'inertia-ui',
+  name: '@ja/inertia-ui',
 
   config: (config: UserConfig): UserConfig => {
 
-    // Allow importing from this package
-    // config = _merge(config, 'server.fs.allow', [
-      // searchForWorkspaceRoot(process.cwd()),
-      // path.resolve(`${packagePath}/resources/js`),
-    // ])
-
     config.resolve = config.resolve || {}
 
+    // Define aliases for components and utilities
     config.resolve.alias = {
       ...(config.resolve.alias || {}),
       '@': path.resolve('resources/js'),
-      '@inertia-ui': path.resolve(`${__dirname}/resources/js`),
+      '@inertia-ui': path.resolve(`${__dirname}/resources/js`)
     }
 
+    // Server-side rendering config
     config.ssr = {
       ...(config.ssr || {}),
       noExternal: ['@inertiajs/server'],
     }
 
+    // Dev server config (for local HMR support)
     config.server = {
       ...(config.server || {}),
       https: false,

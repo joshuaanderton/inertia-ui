@@ -68,7 +68,8 @@ const Table: React.FC<Props> = ({
   }
 
   return (
-    <div className={classNames('flex-1 flex flex-col overflow-scroll px-3', className)}>
+    <div className={classNames('flex-1 flex flex-col px-3', className)}>
+      {/* overflow-x-scroll */}
       <div className="flex-1 -mx-3">
         <table className="relative min-w-full table-fixed divide-y site-divide-color border-b site-border-color">
 
@@ -77,7 +78,7 @@ const Table: React.FC<Props> = ({
               <tr>
 
                 {bulkActions && (
-                  <th scope="col" className={classNames({'sticky top-0 z-10 bg-gradient-to-t from-chrome-100 to-white': fixedHeader}, 'px-7 sm:w-12 sm:px-6')}>
+                  <th scope="col" className={classNames({'sticky top-0 z-10 bg-gradient-to-t from-chrome-100 to-white': fixedHeader}, 'relative px-7 sm:w-12 sm:px-6')}>
                     <input
                       type="checkbox"
                       className="hover:cursor-pointer absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded site-border-color text-primary-600 focus:ring-primary-600"
@@ -166,8 +167,8 @@ const Table: React.FC<Props> = ({
                       'py-3.5 px-3 text-left text-sm whitespace-nowrap',
                       (
                         typeof columns[rowColumnIndex] === 'object' &&
-                        (columns[rowColumnIndex] as any).mobile !== undefined
-                      ) ? ((columns[rowColumnIndex] as any).mobile ? '' : '!hidden md:!table-cell') : ''
+                        (columns[rowColumnIndex] as any)?.mobile !== undefined
+                      ) ? ((columns[rowColumnIndex] as any)?.mobile ? '' : '!hidden md:!table-cell') : ''
                     )}>
                       {typeof rowColumn === 'function' ? rowColumn() : rowColumn}
                     </td>
