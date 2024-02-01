@@ -38,19 +38,19 @@ const DefaultButton: React.FC<DefaultButtonProps> = ({
   const sizeClassNames: any = {
     xs: [
       'font-normal',
-      'text-sm',
+      'text-xs',
       'px-3',
       'py-1',
     ],
     sm: [
-      'font-semibold',
+      'font-normal',
       'text-sm',
       'px-3',
       'py-1.5',
     ],
     base: [
       'font-semibold',
-      'text-base',
+      'text-sm',
       'px-4',
       'py-2',
     ],

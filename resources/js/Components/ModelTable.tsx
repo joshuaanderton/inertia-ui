@@ -198,21 +198,23 @@ const ModelTable: React.FC<Props> = ({
             <span className="site-text-muted text-sm font-medium">
               {__('Showing')} {pagination.data.length} {__('of')} {pagination.total}
             </span>
-            <div className="flex items-stretch text-sm">
-              {pagination.links.map((link, linkIdx) => (
-                <span key={link.label+linkIdx}>
-                  {!link.active && link.label !== '...' ? (
-                    <Link href={link.url} className="px-3 site-text-muted">
-                      <span dangerouslySetInnerHTML={{ __html: link.label }} />
-                    </Link>
-                  ) : (
-                    <span className="px-3 site-text-muted">
-                      {link.label}
-                    </span>
-                  )}
-                </span>
-              ))}
-            </div>
+            {!(pagination.current_page === 1 && pagination.next_page_url === null) && (
+              <div className="flex items-stretch text-sm">
+                {pagination.links.map((link, linkIdx) => (
+                  <span key={link.label+linkIdx}>
+                    {!link.active && link.label !== '...' ? (
+                      <Link href={link.url} className="px-3 site-text-muted">
+                        <span dangerouslySetInnerHTML={{ __html: link.label }} />
+                      </Link>
+                    ) : (
+                      <span className="px-3 site-text-muted">
+                        {link.label}
+                      </span>
+                    )}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
         )}
       </div>

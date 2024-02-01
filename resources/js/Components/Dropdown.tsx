@@ -68,7 +68,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         className={'relative z-50'}
       >
         <div className={className}> {/* onClick={() => setOpen(false)}> */}
-          <div className="rounded ring-1 ring-black ring-opacity-5 py-1 bg-white dark:bg-chrome-900">
+          <div className="rounded ring-1 ring-black ring-opacity-5 overflow-hidden py-1 site-bg">
             {children}
           </div>
         </div>

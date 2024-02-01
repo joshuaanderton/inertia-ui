@@ -34,7 +34,7 @@ const Banner: React.FC = () => {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div className="pointer-events-auto w-full max-w-xs overflow-hidden rounded-lg bg-white dark:bg-chrome-700 shadow-lg ring-1 ring-black ring-opacity-5">
+          <div className="bg-black/40 dark:bg-black/40 text-white pointer-events-auto w-full max-w-xs overflow-hidden rounded-md">
             <div className="p-4">
               <div className="flex items-start">
                 <div className="flex-shrink-0">
