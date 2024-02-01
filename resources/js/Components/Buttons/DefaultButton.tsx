@@ -39,25 +39,25 @@ const DefaultButton: React.FC<DefaultButtonProps> = ({
     xs: [
       'font-normal',
       'text-xs',
-      'px-3',
+      'px-2',
       'py-1',
     ],
     sm: [
       'font-normal',
       'text-sm',
-      'px-3',
-      'py-1.5',
+      'px-2.5',
+      'py-1',
     ],
     base: [
-      'font-semibold',
-      'text-sm',
-      'px-4',
+      'font-bold',
+      'text-xs',
+      'px-3.5',
       'py-2',
     ],
     lg: [
       'font-semibold',
       'text-lg',
-      'px-5',
+      'px-4',
       'py-2.5',
     ]
   }
@@ -68,7 +68,7 @@ const DefaultButton: React.FC<DefaultButtonProps> = ({
     'gap-x-1',
     'border',
     'border-transparent',
-    'rounded',
+    'rounded-lg',
     // 'text-white',
     'transition',
     'ease-in-out',
