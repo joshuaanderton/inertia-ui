@@ -3,17 +3,19 @@ import {
   Chart as ChartJS,
   CategoryScale,
   LinearScale,
-  BarElement,
+  PointElement,
+  LineElement,
   Title,
   Tooltip,
   Legend,
 } from 'chart.js'
-import { Bar } from 'react-chartjs-2'
+import { Line } from 'react-chartjs-2'
 
 ChartJS.register(
   CategoryScale,
   LinearScale,
-  BarElement,
+  PointElement,
+  LineElement,
   Title,
   Tooltip,
   Legend
@@ -28,7 +30,7 @@ let options: any = {
   },
 }
 
-export interface BarChartProps {
+export interface LineChartProps {
   data: Array<{
     label: string
     dataset: {
@@ -37,10 +39,9 @@ export interface BarChartProps {
       color: string
     }[]
   }>
-  horizontal?: boolean
 }
 
-const BarChart: React.FC<BarChartProps> = ({ data, horizontal = false }) => {
+const LineChart: React.FC<LineChartProps> = ({ data }) => {
 
   let chartDataset: {labels: string[], datasets: {label: string, data: number[], backgroundColor: string[], borderColor: string[], borderWidth: number}[]} = {
     labels: [],
@@ -75,11 +76,7 @@ const BarChart: React.FC<BarChartProps> = ({ data, horizontal = false }) => {
     options.plugins.legend = null
   }
 
-  if (horizontal) {
-    options.indexAxis = 'y' as const
-  }
-
-  return <Bar options={options} data={chartDataset} />
+  return <Line style={{ width: '100%' }} options={options} data={chartDataset} />
 }
 
-export default BarChart
+export default LineChart

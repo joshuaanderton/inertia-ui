@@ -4,7 +4,8 @@ import classNames from 'classnames'
 
 const SecondaryButton: React.FC<DefaultButtonProps> = ({ className, ...props }) => (
   <DefaultButton {...props} className={classNames([
-    'site-bg',
+    // 'site-bg',
+    'bg-transparent',
     'site-border-color',
     'text-chrome-700',
     'dark:text-chrome-300',

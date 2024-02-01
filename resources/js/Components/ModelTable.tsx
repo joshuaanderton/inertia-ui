@@ -87,9 +87,9 @@ const ModelTable: React.FC<Props> = ({
   }
 
   return (
-    <div className={classNames('flex-1 flex flex-col px-3', props.className)}>
+    <div className={classNames('flex-1 flex flex-col px-4 md:px-6', props.className)}>
       {/* overflow-x-scroll */}
-      <div className="flex-1 -mx-3">
+      <div className="flex-1 -mx-3 flex flex-col">
         <table className="relative min-w-full table-fixed divide-y site-divide-color border-b site-border-color">
 
           {titles && (
@@ -136,7 +136,7 @@ const ModelTable: React.FC<Props> = ({
                         {bulkActions?.()}
                       </div>
                     )}
-                    <Heading title={title} type="h4" size="sm" className="whitespace-nowrap" />
+                    <Heading title={typeof title === 'string' ? title : title[0]} type="h4" size="sm" className="whitespace-nowrap" />
                   </th>
                 ))}
 
@@ -173,11 +173,15 @@ const ModelTable: React.FC<Props> = ({
                       />
                     </td>
                   )}
-                  {Object.entries(titles).map(([field], titleIdx) => {
-                    const value = item[field]
+                  {Object.entries(titles).map(([field, title], titleIdx) => {
+
+                    const value = typeof title !== 'string' && typeof title[1] === 'function'
+                      ? title[1]?.(item)
+                      : item[field]
+
                     return (
                       <td key={field} scope="col" className={classNames(
-                        'py-3.5 px-3 text-left text-sm whitespace-nowrap',
+                        'py-3.5 px-3 text-left text-sm whitespace-nowrap truncate',
                         // Style first column
                         // Hide all except for first column on mobile
                         titleIdx === 0 ? 'font-semibold' : 'font-normal !hidden md:!table-cell',
@@ -186,7 +190,7 @@ const ModelTable: React.FC<Props> = ({
                       </td>
                     )
                   })}
-                  {!!actions && <td>{actions?.(item)}</td>}
+                  {!!actions && <td className="py-2 px-3">{actions?.(item)}</td>}
                 </tr>
               )
             })}
@@ -194,12 +198,12 @@ const ModelTable: React.FC<Props> = ({
         </table>
 
         {pagination && (
-          <div className="w-full p-3 gap-x-3 flex whitespace-nowrap flex-nowrap justify-between">
+          <div className="mt-auto w-full p-3 gap-x-3 flex whitespace-nowrap flex-nowrap justify-end">
             <span className="site-text-muted text-sm font-medium">
               {__('Showing')} {pagination.data.length} {__('of')} {pagination.total}
             </span>
             {!(pagination.current_page === 1 && pagination.next_page_url === null) && (
-              <div className="flex items-stretch text-sm">
+              <div className="ml-auto flex items-stretch text-sm">
                 {pagination.links.map((link, linkIdx) => (
                   <span key={link.label+linkIdx}>
                     {!link.active && link.label !== '...' ? (
