@@ -1,7 +1,7 @@
 import { Transition } from '@headlessui/react'
-import classNames from 'classnames'
 import React, { PropsWithChildren, useState } from 'react'
 import SecondaryButton from './Buttons/SecondaryButton'
+import { classList } from '@inertia-ui/Utils/theme-defaults'
 
 export interface DropdownProps extends PropsWithChildren {
   right?: boolean
@@ -16,7 +16,6 @@ export interface DropdownProps extends PropsWithChildren {
 
 const Dropdown: React.FC<DropdownProps> = ({
   right = false,
-  className,
   triggerClassName,
   triggerText,
   triggerToggle = true,
@@ -24,18 +23,13 @@ const Dropdown: React.FC<DropdownProps> = ({
   renderTrigger,
   tooltip,
   children,
+  ...props
 }) => {
 
   const [open, setOpen] = useState(false)
 
-  className = classNames('absolute mt-2 rounded shadow-lg', {
-    'origin-top-right right-0': right,
-    'origin-top-left left-0': !right,
-    'w-48': !className?.includes('w-'),
-  }, className)
-
   return (
-    <div className="relative">
+    <div className={classList('dropdown.wrap', 'relative')}>
       <div onClick={() => setOpen(!open)}>
         {renderTrigger ? renderTrigger?.() : triggerText && (
           <SecondaryButton
@@ -67,7 +61,19 @@ const Dropdown: React.FC<DropdownProps> = ({
         leaveTo="transform opacity-0 scale-95"
         className={'relative z-50'}
       >
-        <div className={className}> {/* onClick={() => setOpen(false)}> */}
+        <div className={classList('dropdown.menu', [
+            'absolute',
+            'mt-2',
+            'rounded',
+            'shadow-lg'
+          ],
+          {
+            'origin-top-right right-0': right,
+            'origin-top-left left-0': !right,
+            'w-48': !props.className?.includes('w-'),
+          },
+          props.className
+        )}>
           <div className="rounded ring-1 ring-black/20 dark:ring-white/20 overflow-hidden py-1 site-bg">
             {children}
           </div>

@@ -7,7 +7,7 @@ import { Pagination } from '@inertia-ui/jetstream-types'
 
 interface BaseModelRow {[hash: string]: number|string|boolean|(() => JSX.Element)}
 
-interface ModelRow extends BaseModelRow {
+export interface ModelRow extends BaseModelRow {
   'id': number
 }
 
@@ -16,7 +16,7 @@ export interface ModelPagination extends Pagination {
 }
 
 interface Props {
-  titles: {[hash: string]: string}
+  titles: {[hash: string]: string|{label: string, value: (item: ModelRow) => string|number|React.JSX.Element}}
   pagination: ModelPagination
   selected?: ModelRow[]
   fixedHeader?: boolean
@@ -88,7 +88,6 @@ const ModelTable: React.FC<Props> = ({
 
   return (
     <div className={classNames('flex-1 flex flex-col px-4 md:px-6', props.className)}>
-      {/* overflow-x-scroll */}
       <div className="flex-1 -mx-3 flex flex-col">
         <table className="relative min-w-full table-fixed divide-y site-divide-color border-b site-border-color">
 
@@ -126,9 +125,9 @@ const ModelTable: React.FC<Props> = ({
                         'px-3',
                         'text-left',
                         'text-sm',
-                        'font-semibold'
-                      ],
-                      titleIdx === 0 ? '!hidden md:!table-cell' : ''
+                        'font-semibold',
+                        `${field}-cell`
+                      ]
                     )}
                   >
                     {titleIdx === 0 && selectedItems.length > 0 && typeof bulkActions !== 'boolean' && (
@@ -136,7 +135,7 @@ const ModelTable: React.FC<Props> = ({
                         {bulkActions?.()}
                       </div>
                     )}
-                    <Heading title={typeof title === 'string' ? title : title[0]} type="h4" size="sm" className="whitespace-nowrap" />
+                    <Heading title={typeof title === 'string' ? title : title.label} type="h4" size="sm" className="whitespace-nowrap" />
                   </th>
                 ))}
 
@@ -175,18 +174,18 @@ const ModelTable: React.FC<Props> = ({
                   )}
                   {Object.entries(titles).map(([field, title], titleIdx) => {
 
-                    const value = typeof title !== 'string' && typeof title[1] === 'function'
-                      ? title[1]?.(item)
+                    const value = typeof title !== 'string'
+                      ? title.value(item)
                       : item[field]
 
                     return (
                       <td key={field} scope="col" className={classNames(
-                        'py-3.5 px-3 text-left text-sm whitespace-nowrap truncate',
+                        'py-3.5 px-3 text-left text-sm',
+                        `${field}-cell`,
                         // Style first column
-                        // Hide all except for first column on mobile
-                        titleIdx === 0 ? 'font-semibold' : 'font-normal !hidden md:!table-cell',
+                        titleIdx === 0 ? 'font-semibold' : 'font-normal',
                       )}>
-                        {typeof value === 'function' ? value() : value}
+                        <span className="whitespace-nowrap truncate">{typeof value === 'function' ? value() : value}</span>
                       </td>
                     )
                   })}
