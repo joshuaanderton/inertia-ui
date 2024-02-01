@@ -13,7 +13,7 @@ export type BarsProps = {
 
 const BarChart: React.FC<BarsProps> = ({ dataset = [] }) => {
 
-  const isEmpty = dataset.length === 0 || dataset.every(ds => ds.value === 0)
+  const isEmpty = dataset.length === 0 || dataset.every(ds => ds.value === 0 || ds.value === 0.00)
 
   const width = 400,
         height = width / 2,
@@ -54,7 +54,7 @@ const BarChart: React.FC<BarsProps> = ({ dataset = [] }) => {
             {dataset.map(({ label, value }) => {
 
               const barWidth = xScale.bandwidth(),
-                    barHeight = yMax - (yScale(value) ?? 0),
+                    barHeight = (yMax - (yScale(value) ?? 0)) || 2,
                     barX = xScale(label),
                     barY = yMax - barHeight
 
