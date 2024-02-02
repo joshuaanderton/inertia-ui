@@ -1,112 +1,85 @@
-import React, { useMemo } from 'react'
-import { Bar } from '@visx/shape'
-import { Group } from '@visx/group'
-import { scaleBand, scaleLinear } from '@visx/scale'
-import { AxisBottom, AxisLeft } from '@visx/axis'
-import { ScaleSVG } from '@visx/responsive'
-import { lang as __ } from '@inertia-ui/Hooks/useLang'
-import classNames from 'classnames'
+import React from 'react'
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js'
+import { Bar } from 'react-chartjs-2'
 
-export type BarsProps = {
-  dataset: {label: string, value: number}[]
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend
+)
+
+let options: any = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'bottom' as const,
+    }
+  },
 }
 
-const BarChart: React.FC<BarsProps> = ({ dataset = [] }) => {
+export interface BarChartProps {
+  data: Array<{
+    label: string
+    dataset: {
+      label: string
+      value: number
+      color: string
+    }[]
+  }>
+  horizontal?: boolean
+}
 
-  const isEmpty = dataset.length === 0 || dataset.every(ds => ds.value === 0 || ds.value === 0.00)
+const BarChart: React.FC<BarChartProps> = ({ data, horizontal = false }) => {
 
-  const width = 400,
-        height = width / 2,
-        xMargin = 16,
-        yMargin = 16 * 2,
-        xMax = width - xMargin,
-        yMax = height - yMargin
+  let chartDataset: {labels: string[], datasets: {label: string, data: number[], backgroundColor: string[], borderColor: string[], borderWidth: number}[]} = {
+    labels: [],
+    datasets: []
+  }
 
-  const xScale = useMemo(
-    () =>
-      scaleBand<string>({
-        range: [0, xMax],
-        domain: dataset.map(({ label }) => label),
-        padding: 0.4,
-      }),
-    [xMax],
-  )
+  data.forEach(({ label, dataset }, datasetIdx) => {
 
-  const yScale = useMemo(
-    () =>
-      scaleLinear<number>({
-        range: [yMax, 0],
-        domain: [0, Math.max(...dataset.map(({ value }) => value))],
-      }),
-    [yMax],
-  )
+    if (datasetIdx === 0) {
+      dataset.forEach(({ label }) => chartDataset.labels.push(label))
+    }
 
-  return (
-    <div className="relative">
-      {isEmpty && (
-        <div className="z-10 absolute inset-0 flex items-center justify-center">
-          <p className="text-lg site-text-muted">{__('No data for this range...')}</p>
-        </div>
-      )}
-      <div className={classNames((isEmpty ? '[&_*]:opacity-0' : ''), 'bg-chrome-300 dark:bg-chrome-900')}>
-        <ScaleSVG width={width} height={height}>
-          <Group top={yMargin / 2} left={xMargin / 2}>
-            {dataset.map(({ label, value }) => {
+    let newDataset = {
+      label,
+      data: [] as number[],
+      borderColor: [] as string[],
+      backgroundColor: [] as string[],
+      borderWidth: 5
+    }
 
-              const barWidth = xScale.bandwidth(),
-                    barHeight = (yMax - (yScale(value) ?? 0)) || 2,
-                    barX = xScale(label),
-                    barY = yMax - barHeight
+    dataset.forEach(({ value, color }) => {
+      newDataset.data.push(value)
+      newDataset.borderColor.push(color)
+      newDataset.backgroundColor.push(color)
+    })
 
-              return (
-                <Bar
-                  key={label}
-                  x={barX}
-                  y={barY}
-                  width={barWidth}
-                  height={barHeight}
-                  fill="currentColor"
-                  className="text-chrome-950 dark:text-chrome-50"
-                  data-tooltip-content={`${label}: ${value}`}
-                  onMouseOver={() => {
-                    //
-                  }}
-                />
-              )
-            })}
+    chartDataset.datasets.push(newDataset)
 
-            {/* <AxisLeft
-              hideAxisLine
-              hideTicks
-              scale={xScale}
-              tickFormat={(val) => val}
-              stroke="white"
-              tickStroke="white"
-              tickLabelProps={{
-                fill: 'white',
-                fontSize: 11,
-                textAnchor: 'end',
-                dy: '0.33em',
-              }}
-            />
+  })
 
-            <AxisBottom
-              top={yMax}
-              scale={yScale}
-              stroke="white"
-              tickStroke="white"
-              tickLabelProps={{
-                fill: 'white',
-                fontSize: 11,
-                textAnchor: 'middle',
-              }}
-            /> */}
+  if (data.length === 1) {
+    options.plugins.legend = null
+  }
 
-          </Group>
-        </ScaleSVG>
-      </div>
-    </div>
-  )
+  if (horizontal) {
+    options.indexAxis = 'y' as const
+  }
+
+  return <Bar options={options} data={chartDataset} />
 }
 
 export default BarChart
