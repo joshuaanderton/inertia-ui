@@ -53,7 +53,7 @@ const Table: React.FC<Props> = ({
           {bulkActions?.()}
         </div>
       )}
-      <table className="min-w-full table-fixed divide-y site-divide-color">
+      <table className="min-w-full table-fixed divide-y site-divide">
         {columns && (
           <thead>
             <tr>
@@ -61,7 +61,7 @@ const Table: React.FC<Props> = ({
                 <th scope="col" className="relative px-7 sm:w-12 sm:px-6">
                   <input
                     type="checkbox"
-                    className="hover:cursor-pointer absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded site-border-color text-primary-600 focus:ring-primary-600"
+                    className="hover:cursor-pointer absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded site-border text-primary-600 focus:ring-primary-600"
                     ref={checkbox}
                     checked={checked}
                     onChange={toggleAll}
@@ -76,7 +76,7 @@ const Table: React.FC<Props> = ({
             </tr>
           </thead>
         )}
-        <tbody className="divide-y site-divide-color">
+        <tbody className="divide-y site-divide">
           {rows.map((rowColumns, rowIndex) => (
             <tr key={rowIndex} className={selectedRows.includes(rowIndex) ? 'bg-black/5' : undefined}>
               {bulkActions && (
@@ -86,7 +86,7 @@ const Table: React.FC<Props> = ({
                   )}
                   <input
                     type="checkbox"
-                    className="hover:cursor-pointer absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded site-border-color text-primary-600 focus:ring-primary-600"
+                    className="hover:cursor-pointer absolute left-4 top-1/2 -mt-2 h-4 w-4 rounded site-border text-primary-600 focus:ring-primary-600"
                     value={rowIndex}
                     checked={selectedRows.includes(rowIndex)}
                     onChange={(event: any) =>

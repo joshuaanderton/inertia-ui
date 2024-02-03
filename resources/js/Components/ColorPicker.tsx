@@ -8,7 +8,7 @@ const ColorPicker: React.FC<{ value: string, onChange: (event: any) => void, id?
       <label
         style={{ backgroundColor: value || '' }}
         className={classNames(
-          !!value ? 'border-transparent' : 'site-border-color',
+          !!value ? 'border-transparent' : 'site-border',
           'w-[1.85rem] absolute left-1.5 inset-y-1.5 border cursor-pointer shrink-0 rounded [&_input]:h-0 [&_input]:absolute [&_input]:bottom-0 [&_input]:opacity-0'
         )}
       >

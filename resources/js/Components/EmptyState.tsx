@@ -32,7 +32,7 @@ const EmptyState: React.FC<Props> = ({
       className={classNames([
         'border-2',
         'border-dashed',
-        'site-border-color',
+        'site-border',
         'h-full',
         'w-full',
         'rounded-lg',

@@ -29,7 +29,7 @@ const Toggle: React.FC<Props> = ({ enabled, onChange, label, disabled = false, c
         <span
           aria-hidden="true"
           className={`${isEnabled ? 'translate-x-[26px]' : 'translate-x-0'}
-            pointer-events-none inline-block h-[24px] w-[24px] transform rounded-full site-bg border site-border-color dark:bg-chrome-950 shadow-lg ring-0 transition duration-200 ease-in-out`}
+            pointer-events-none inline-block h-[24px] w-[24px] transform rounded-full site-bg border site-border dark:bg-chrome-950 shadow-lg ring-0 transition duration-200 ease-in-out`}
         />
       </Switch>
 

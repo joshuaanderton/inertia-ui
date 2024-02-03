@@ -18,12 +18,12 @@ const Pagination: React.FC<Props> = ({ pagination, ...props }) => {
         params = route().params
 
   return (
-    <div className={classNames(props.className, 'site-text flex items-center justify-between border-t site-border-color py-3')}>
+    <div className={classNames(props.className, 'site-text flex items-center justify-between border-t site-border py-3')}>
       <div className="flex flex-1 justify-between sm:hidden">
         {prev_page_url && (
           <Link
             href={prev_page_url}
-            className="relative inline-flex items-center rounded-md border site-border-color px-4 py-2 text-sm font-medium hover:bg-gray-50"
+            className="relative inline-flex items-center rounded-md border site-border px-4 py-2 text-sm font-medium hover:bg-gray-50"
           >
             <ArrowLeftIcon className="h-4 w-4 -left-1 relative" aria-hidden="true" />
             {__('Previous')}
@@ -32,7 +32,7 @@ const Pagination: React.FC<Props> = ({ pagination, ...props }) => {
         {next_page_url && (
           <Link
             href={next_page_url}
-            className="relative ml-3 inline-flex items-center rounded-md border site-border-color px-4 py-2 text-sm font-medium hover:bg-gray-50"
+            className="relative ml-3 inline-flex items-center rounded-md border site-border px-4 py-2 text-sm font-medium hover:bg-gray-50"
           >
             {__('Next')}
             <ArrowRightIcon className="h-4 w-4 -right-1 relative" aria-hidden="true" />
