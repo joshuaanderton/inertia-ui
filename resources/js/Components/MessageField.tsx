@@ -1,7 +1,7 @@
 import React from 'react'
 import { lang as __ } from '@inertia-ui/Hooks/useLang'
 import { PaperClipIcon } from '@heroicons/react/20/solid'
-import PrimaryButton from '@inertia-ui/Components/Buttons/PrimaryButton'
+import PrimaryButton from '@/Components/Buttons/PrimaryButton'
 import classNames from 'classnames'
 import InputLabel from './InputLabel'
 
@@ -42,7 +42,7 @@ const MessageField: React.FC<Props> = ({
           <div className="flex items-center">
             <button
               type="button"
-              className="-m-2.5 flex h-10 w-10 items-center justify-center rounded-full text-chrome-400 hover:text-chrome-500"
+              className="-m-2.5 flex h-10 w-10 items-center justify-center rounded-full text-chrome-400 hover:site-text-muted"
             >
               <PaperClipIcon className="h-5 w-5" aria-hidden="true" />
               <span className="sr-only">{__('Attach a file')}</span>

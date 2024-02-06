@@ -4,7 +4,7 @@ import { Combobox } from '@headlessui/react'
 import { lang as __ } from '@inertia-ui/Hooks/useLang'
 import classNames from 'classnames'
 import InputLabel from './InputLabel'
-import PrimaryButton from '@inertia-ui/Components/Buttons/PrimaryButton'
+import PrimaryButton from '@/Components/Buttons/PrimaryButton'
 
 export interface MultiselectOption {
   label: string

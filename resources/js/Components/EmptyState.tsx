@@ -2,7 +2,7 @@ import React from 'react'
 import { ArrowRightIcon, PlusIcon } from '@heroicons/react/20/solid'
 import { FolderPlusIcon } from '@heroicons/react/24/outline'
 import { lang as __ } from '@inertia-ui/Hooks/useLang'
-import PrimaryButton from '@inertia-ui/Components/Buttons/PrimaryButton'
+import PrimaryButton from '@/Components/Buttons/PrimaryButton'
 import classNames from 'classnames'
 
 interface Props {
@@ -30,9 +30,12 @@ const EmptyState: React.FC<Props> = ({
       type="button"
       onClick={onClick}
       className={classNames([
+        'site-border',
+        'border-opacity-50',
+        'hover:border-opacity-100',
+        'transition-all',
         'border-2',
         'border-dashed',
-        'site-border',
         'h-full',
         'w-full',
         'rounded-lg',

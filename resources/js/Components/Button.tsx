@@ -20,7 +20,7 @@ export interface DefaultButtonProps extends PropsWithChildren {
   'data-tooltip-content'?: string
 }
 
-const DefaultButton: React.FC<DefaultButtonProps> = ({
+const Button: React.FC<DefaultButtonProps> = ({
   as,
   text = '',
   type = 'submit',
@@ -102,4 +102,4 @@ const DefaultButton: React.FC<DefaultButtonProps> = ({
   return <button type={type} onClick={onClick} {...props}>{children}</button>
 }
 
-export default DefaultButton
+export default Button
