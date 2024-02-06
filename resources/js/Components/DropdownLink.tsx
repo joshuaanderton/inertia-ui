@@ -28,7 +28,7 @@ const DropdownLink: React.FC<Props> = ({
     'font-bold': active,
     'hover:bg-chrome-400 dark:hover:bg-chrome-950/50': !active
   }, [
-    'text-chrome-700',
+    'text-chrome-900',
     'dark:text-chrome-300',
     'flex',
     'items-center',
@@ -41,7 +41,7 @@ const DropdownLink: React.FC<Props> = ({
     'text-sm',
     'leading-5',
     'focus:outline-none',
-    'focus:bg-chrome-100',
+    'focus:bg-chrome-400',
     'dark:focus:bg-chrome-800',
     'transition',
     'duration-150',
