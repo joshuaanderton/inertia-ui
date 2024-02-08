@@ -3,6 +3,7 @@
 namespace Ja\InertiaUI\Providers;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
+use Ja\InertiaUI\Console\Commands\GenerateInertiaPageCommand;
 use Ja\InertiaUI\Console\Commands\GenerateTypescriptTypesCommand;
 
 class ServiceProvider extends BaseServiceProvider
@@ -17,6 +18,7 @@ class ServiceProvider extends BaseServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 GenerateTypescriptTypesCommand::class,
+                GenerateInertiaPageCommand::class
             ]);
         }
     }
