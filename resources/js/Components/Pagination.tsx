@@ -19,7 +19,7 @@ const Pagination: React.FC<Props> = ({ pagination, ...props }) => {
         params = route().params
 
   return (
-    <div className={classNames(props.className, 'site-text flex items-center justify-between')}>
+    <div className={classNames(props.className, 'flex items-center justify-between')}>
       <div className="flex flex-1 justify-between sm:hidden">
         {prev_page_url && (
           <Link
@@ -48,10 +48,10 @@ const Pagination: React.FC<Props> = ({ pagination, ...props }) => {
           </p>
         </div>
         <div>
-          <nav className="isolate inline-flex gap-x-1 rounded-md shadow-sm" aria-label="Pagination">
+          <nav className="isolate inline-flex divide-x site-divide border site-border rounded items-stretch" aria-label="Pagination">
 
             {links.map(({ label, url, active }, index) => (
-              <SecondaryButton
+              <button
                 key={label}
                 type="button"
                 disabled={active || !url}
@@ -65,31 +65,38 @@ const Pagination: React.FC<Props> = ({ pagination, ...props }) => {
 
                   router.visit(route)
                 }}
-                active={active}
                 className={classNames(active && [
                   'active',
                   'z-10',
-                  '!bg-chrome-500',
+                  '!bg-black',
                   '!text-white',
                 ], {
-                  'site-text-muted hover:opacity-50': !active && url !== null,
-                  'opacity-40': !url
-                })}
+                  'hover:bg-black/20 hover:text-black': !active && url !== null,
+                  'opacity-40': !url && (label.includes('Previous') || label.includes('Next'))
+                }, [
+                  'py-2',
+                  'px-3.5',
+                  'transition-colors',
+                  '!shadow-none',
+                  'inline-flex',
+                  'gap-x-1',
+                  'items-center'
+                ])}
               >
                 {label.includes('Previous') ? (
                   <>
-                    <ArrowLeftIcon className="h-4 w-4 -left-0.5 relative" aria-hidden="true" />
-                    <span>{__('Previous')}</span>
+                    <ArrowLeftIcon className="h-4 w-4" aria-hidden="true" />
+                    <span className="sr-only">{__('Previous')}</span>
                   </>
                 ) : label.includes('Next') ? (
                   <>
-                    <span>{__('Next')}</span>
-                    <ArrowRightIcon className="h-4 w-4 -right-0.5 relative" aria-hidden="true" />
+                    <span className="sr-only">{__('Next')}</span>
+                    <ArrowRightIcon className="h-4 w-4" aria-hidden="true" />
                   </>
                 ) : (
                   <>{label}</>
                 )}
-              </SecondaryButton>
+              </button>
             ))}
 
           </nav>
