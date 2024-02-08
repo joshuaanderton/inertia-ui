@@ -5,6 +5,7 @@ import classNames from 'classnames'
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/20/solid'
 import { router, Link } from '@inertiajs/react'
 import useRoute from '@inertia-ui/Hooks/useRoute'
+import SecondaryButton from '@/Components/Buttons/SecondaryButton'
 
 interface Props {
   pagination: PaginationInterface
@@ -18,7 +19,7 @@ const Pagination: React.FC<Props> = ({ pagination, ...props }) => {
         params = route().params
 
   return (
-    <div className={classNames(props.className, 'site-text flex items-center justify-between border-t site-border py-3')}>
+    <div className={classNames(props.className, 'site-text flex items-center justify-between')}>
       <div className="flex flex-1 justify-between sm:hidden">
         {prev_page_url && (
           <Link
@@ -47,10 +48,10 @@ const Pagination: React.FC<Props> = ({ pagination, ...props }) => {
           </p>
         </div>
         <div>
-          <nav className="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
+          <nav className="isolate inline-flex gap-x-1 rounded-md shadow-sm" aria-label="Pagination">
 
             {links.map(({ label, url, active }, index) => (
-              <button
+              <SecondaryButton
                 key={label}
                 type="button"
                 disabled={active || !url}
@@ -64,50 +65,31 @@ const Pagination: React.FC<Props> = ({ pagination, ...props }) => {
 
                   router.visit(route)
                 }}
+                active={active}
                 className={classNames(active && [
+                  'active',
                   'z-10',
-                  'bg-primary-600',
-                  'text-white',
-                  'focus-visible:outline',
-                  'focus-visible:outline-2',
-                  'focus-visible:outline-offset-2',
-                  'focus-visible:outline-primary-600'
+                  '!bg-chrome-500',
+                  '!text-white',
                 ], {
                   'site-text-muted hover:opacity-50': !active && url !== null,
                   'opacity-40': !url
-                }, [
-                  'relative',
-                  'hidden',
-                  'items-center',
-                  'px-4',
-                  'rounded',
-                  'py-2',
-                  'transition-all',
-                  'text-sm',
-                  'font-semibold',
-                  'ring-1',
-                  'ring-inset',
-                  'ring-transparent',
-                  'focus:z-20',
-                  'focus:outline-offset-0',
-                  'md:inline-flex',
-                  'gap-x-1',
-                ])}
+                })}
               >
                 {label.includes('Previous') ? (
                   <>
-                    <ArrowLeftIcon className="h-4 w-4 -left-1 relative" aria-hidden="true" />
+                    <ArrowLeftIcon className="h-4 w-4 -left-0.5 relative" aria-hidden="true" />
                     <span>{__('Previous')}</span>
                   </>
                 ) : label.includes('Next') ? (
                   <>
                     <span>{__('Next')}</span>
-                    <ArrowRightIcon className="h-4 w-4 -right-1 relative" aria-hidden="true" />
+                    <ArrowRightIcon className="h-4 w-4 -right-0.5 relative" aria-hidden="true" />
                   </>
                 ) : (
                   <>{label}</>
                 )}
-              </button>
+              </SecondaryButton>
             ))}
 
           </nav>

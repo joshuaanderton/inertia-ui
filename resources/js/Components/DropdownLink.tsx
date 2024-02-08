@@ -25,8 +25,8 @@ const DropdownLink: React.FC<Props> = ({
 }) => {
 
   props.className = classNames({
-    'font-bold': active,
-    'hover:bg-chrome-400 dark:hover:bg-chrome-950/50': !active
+    'font-bold bg-chrome-100': active,
+    'hover:bg-chrome-100 dark:hover:bg-chrome-950/50': !active
   }, [
     'flex',
     'items-center',
