@@ -1,8 +1,9 @@
-export default (date: string) => (
+export default (date: string, options: any = {}) => (
   (new Date(date + ' UTC')).toLocaleString(undefined, {
     month: 'short',
     day: 'numeric',
     hour: 'numeric',
-    minute: 'numeric'
+    minute: 'numeric',
+    ...options
   })
 )

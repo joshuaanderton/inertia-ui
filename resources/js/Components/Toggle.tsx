@@ -15,8 +15,6 @@ const Toggle: React.FC<Props> = ({ enabled, onChange, label, disabled = false, c
 
   const [isEnabled, setIsEnabled] = useState(enabled || false)
 
-  console.log(enabled)
-
   useEffect(() => onChange?.(isEnabled), [isEnabled])
 
   return (
