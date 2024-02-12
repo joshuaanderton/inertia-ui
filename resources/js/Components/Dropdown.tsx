@@ -24,6 +24,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   renderTrigger,
   tooltip,
   children,
+  closeOnSelect = true,
 }) => {
 
   const [open, setOpen] = useState(false)
@@ -68,7 +69,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         leaveTo="transform opacity-0 scale-95"
         className={'relative z-50'}
       >
-        <div className={className}>  {/* onClick={() => setOpen(false)}> */}
+        <div className={className} onClick={() => closeOnSelect ? setOpen(false) : null}>
           <div className="rounded-lg ring-1 ring-black ring-opacity-5 py-1 bg-white dark:bg-chrome-900 max-h-64 overflow-y-scroll">
             {children}
           </div>
