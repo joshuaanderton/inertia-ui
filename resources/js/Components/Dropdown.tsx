@@ -12,6 +12,7 @@ export interface DropdownProps extends PropsWithChildren {
   renderTrigger?: () => JSX.Element
   disabled?: boolean
   tooltip?: string
+  closeOnSelect?: boolean
 }
 
 const Dropdown: React.FC<DropdownProps> = ({
