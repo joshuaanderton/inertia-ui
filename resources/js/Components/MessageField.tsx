@@ -38,6 +38,7 @@ const MessageField: React.FC<Props> = ({
       />
 
       <div className="absolute right-0 bottom-0 flex justify-between py-2 pl-3 pr-2">
+
         {/* <div className="flex items-center space-x-5">
           <div className="flex items-center">
             <button
@@ -49,8 +50,9 @@ const MessageField: React.FC<Props> = ({
             </button>
           </div>
         </div> */}
+
         <div className="flex-shrink-0 ml-auto">
-          <PrimaryButton disabled={disabled} text={buttonText || __('Send')} />
+          <PrimaryButton disabled={disabled} size="sm" text={buttonText || __('Send')} />
         </div>
       </div>
     </fieldset>
