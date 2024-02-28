@@ -1,25 +1,40 @@
-import React from 'react'
+import React, { useRef, useState } from 'react'
 import { lang as __ } from '@inertia-ui/Hooks/useLang'
 import { PaperClipIcon } from '@heroicons/react/20/solid'
 import PrimaryButton from '@/Components/Buttons/PrimaryButton'
-import classNames from 'classnames'
 import InputLabel from './InputLabel'
 
 interface Props {
   value?: string
+  attachment?: File|null
   placeholder?: string
   disabled?: boolean
   buttonText?: string
   onChange: (event: any) => void
+  onAttachmentChange?: (file: File) => void
 }
 
 const MessageField: React.FC<Props> = ({
   value = '',
+  attachment = null,
   placeholder,
   disabled = false,
   buttonText,
-  onChange
+  onChange,
+  onAttachmentChange
 }) => {
+
+  const handleFileChange = () => {
+    const file = fileInputRef.current?.files?.[0]
+
+    if (!file) return
+
+    setFileName(file.name)
+    onAttachmentChange?.(file)
+  }
+
+  const fileInputRef = useRef<HTMLInputElement>(null),
+        [fileName, setFileName] = useState<string|null>(attachment?.name || null)
 
   return (
     <fieldset className="relative">
@@ -39,17 +54,32 @@ const MessageField: React.FC<Props> = ({
 
       <div className="absolute right-0 bottom-0 flex justify-between py-2 pl-3 pr-2">
 
-        {/* <div className="flex items-center space-x-5">
-          <div className="flex items-center">
-            <button
-              type="button"
-              className="-m-2.5 flex h-10 w-10 items-center justify-center rounded-full text-chrome-400 hover:site-text-muted"
-            >
-              <PaperClipIcon className="h-5 w-5" aria-hidden="true" />
-              <span className="sr-only">{__('Attach a file')}</span>
-            </button>
+        {!!onAttachmentChange && (
+          <div className="flex items-center space-x-5">
+            <div className="flex items-center">
+              <input
+                ref={fileInputRef}
+                type="file"
+                className="hidden"
+                multiple={false}
+                onChange={handleFileChange}
+              />
+
+              <button
+                type="button"
+                className="text-xs flex p-2 items-center justify-center rounded-full text-chrome-600 hover:text-chrome-800"
+                onClick={() => fileInputRef.current?.click()}
+              >
+                <PaperClipIcon className="h-5 w-5" aria-hidden="true" />
+                {fileName ? (
+                  <span className="truncate font-mono">{fileName}</span>
+                ) : (
+                  <span className="sr-only">{__('Attach a file')}</span>
+                )}
+              </button>
+            </div>
           </div>
-        </div> */}
+        )}
 
         <div className="flex-shrink-0 ml-auto">
           <PrimaryButton disabled={disabled} size="sm" text={buttonText || __('Send')} />
