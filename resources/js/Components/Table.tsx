@@ -44,7 +44,7 @@ const Table: React.FC<Props> = ({
   }
 
   return (
-    <div className={classNames('relative -mx-3', className)}>
+    <div className={classNames('relative', className)}>
       {selected.length > 0 && typeof bulkActions !== 'boolean' && (
         <div className="absolute left-14 top-2 flex h-9 items-center space-x-3 site-bg sm:left-12">
           {bulkActions?.()}
