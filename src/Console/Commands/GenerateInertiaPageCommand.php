@@ -22,7 +22,7 @@ class GenerateInertiaPageCommand extends Command
      */
     public function handle()
     {
-        $name = str($this->argument('name'))->camel()->ucfirst();
+        $name = str($this->argument('name'))->studly();
 
         $this->pageName = basename($name);
 
