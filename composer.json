@@ -1,37 +1,37 @@
 {
-  "name": "joshuaanderton/inertia-ui",
-  "description": "React components for Inertia JS",
-  "license": "MIT",
-  "authors": [
-      {
-          "name": "Joshua Anderton",
-          "email": "hey@joshuaanderton.ca"
-      }
-  ],
-  "require": {
-      "php": "^8.1|^8.2"
-  },
-  "autoload": {
-      "files": [
-          "src/helpers.php"
-      ],
-      "psr-4": {
-          "Ja\\InertiaUI\\": "src"
-      }
-  },
-  "autoload-dev": {
-      "psr-4": {
-          "Ja\\InertiaUI\\Tests\\": "tests"
-      }
-  },
-  "config": {
-      "sort-packages": true
-  },
-  "extra": {
-      "laravel": {
-          "providers": [
-              "Ja\\InertiaUI\\Providers\\ServiceProvider"
-          ]
-      }
-  }
+    "name": "joshuaanderton/inertia-ui",
+    "description": "React components for Inertia JS",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Joshua Anderton",
+            "email": "hey@joshuaanderton.ca"
+        }
+    ],
+    "require": {
+        "php": "^8.1|^8.2"
+    },
+    "autoload": {
+        "files": [
+            "src/helpers.php"
+        ],
+        "psr-4": {
+            "Ja\\InertiaUI\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Ja\\InertiaUI\\Tests\\": "tests"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Ja\\InertiaUI\\Providers\\ServiceProvider"
+            ]
+        }
+    }
 }
