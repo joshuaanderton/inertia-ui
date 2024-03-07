@@ -42,7 +42,7 @@ const Select: React.FC<Props> = ({
       onChange={handleSelected}
       className={classNames([
         'site-input',
-        size === 'sm' ? 'py-1 !text-sm' : 'py-2.5',
+        size === 'sm' ? 'py-1 !text-sm' : 'py-2',
         'leading-5',
         'max-w-full',
       ], className)}
