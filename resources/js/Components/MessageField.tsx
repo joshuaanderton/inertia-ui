@@ -2,7 +2,6 @@ import React, { useRef, useState } from 'react'
 import { lang as __ } from '@inertia-ui/Hooks/useLang'
 import { PaperClipIcon } from '@heroicons/react/20/solid'
 import PrimaryButton from '@/Components/Buttons/PrimaryButton'
-import InputLabel from './InputLabel'
 
 interface Props {
   value?: string
@@ -38,10 +37,6 @@ const MessageField: React.FC<Props> = ({
 
   return (
     <fieldset className="relative">
-      <InputLabel htmlFor="comment" className="sr-only">
-        {__('Send message')}
-      </InputLabel>
-
       <textarea
         rows={3}
         value={value}

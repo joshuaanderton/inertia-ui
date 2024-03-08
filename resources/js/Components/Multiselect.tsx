@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { CheckIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import React, { useState } from 'react'
+import { XMarkIcon } from '@heroicons/react/24/outline'
 import { Combobox } from '@headlessui/react'
 import { lang as __ } from '@inertia-ui/Hooks/useLang'
 import classNames from 'classnames'
-import InputLabel from './InputLabel'
 import PrimaryButton from '@/Components/Buttons/PrimaryButton'
-import { set } from 'lodash'
 
 export interface MultiselectOption {
   label: string
@@ -19,14 +17,12 @@ interface Props {
   onChange: (options: MultiselectOption[]) => void
   disabled?: boolean
   placeholder?: string
-  label?: string
 }
 
 const Multiselect: React.FC<Props> = ({
   values = [],
   options = [],
   onChange,
-  label,
   placeholder,
   addOptions = false,
   ...props
@@ -49,11 +45,6 @@ const Multiselect: React.FC<Props> = ({
 
   return (
     <Combobox value={values} onChange={handleChange} multiple>
-      {label && (
-        <Combobox.Label>
-          <InputLabel as="span" value={label} />
-        </Combobox.Label>
-      )}
       <div className="site-input min-h-[1.5rem] focus-within:ring-2 focus-within:ring-primary-500 relative flex flex-wrap items-center w-full">
 
         {/* Preview Tags */}

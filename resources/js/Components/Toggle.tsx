@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Switch } from '@headlessui/react'
 import classNames from 'classnames'
-import InputLabel from '@inertia-ui/Components/InputLabel'
+import InputLabel from './InputLabel'
 
 interface Props {
   enabled?: boolean
@@ -34,7 +34,9 @@ const Toggle: React.FC<Props> = ({ enabled, onChange, label, disabled = false, c
       </Switch>
 
       {label && (
-        <InputLabel className="hover:cursor-pointer" value={label} />
+        <InputLabel className="text-sm hover:cursor-pointer">
+          {label}
+        </InputLabel>
       )}
     </div>
   )
