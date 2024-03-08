@@ -1,19 +1,27 @@
 import React, { PropsWithChildren } from 'react'
 import classNames from 'classnames'
+import { lang as __ } from '@inertia-ui/Hooks/useLang'
+import AdminTranslationsModalTrigger from '@/Layouts/Partials/AdminTranslationsModalTrigger'
 
-interface Props extends PropsWithChildren {
-  title?: string
+interface Props {
+  title: string
+  count?: number
+  lang?: string
   type?: "h1"|"h2"|"h3"|"h4"|"h5"
   size?: "sm"|"lg"
   className?: string
 }
 
-const Heading: React.FC<Props> = ({ title, size, type = "h3", className = '', children }) => {
+const Heading: React.FC<Props> = ({ title, count = 0, lang, size, className, type = "h3" }) => {
+
+  lang = lang || `default.${title.toLowerCase().replaceAll(' ', '_')}`
 
   interface HeadingElementProps extends PropsWithChildren {
     type: "h1"|"h2"|"h3"|"h4"|"h5"
     className?: string
   }
+
+  const titleText = __(lang, {}, title)
 
   const HeadingElement: React.FC<HeadingElementProps> = ({ type, children, ...props }) => (
     <>
@@ -32,7 +40,12 @@ const Heading: React.FC<Props> = ({ title, size, type = "h3", className = '', ch
           'prose-sm': size === 'sm',
           'prose-lg': size === 'lg',
         },
-        'prose dark:prose-invert',
+        'prose',
+        'dark:prose-invert',
+        'flex',
+        'items-start',
+        'gap-x-4',
+        'group',
         className
       )}
     >
@@ -40,8 +53,12 @@ const Heading: React.FC<Props> = ({ title, size, type = "h3", className = '', ch
         type={type}
         className={classNames('site-heading', className)}
       >
-        {title}{children}
+        {titleText} {count > 0 ? `(${count})` : null}
       </HeadingElement>
+
+      <AdminTranslationsModalTrigger
+        className="opacity-0 group-hover:opacity-100"
+        languageLines={[{ key: lang, text: titleText }]} />
     </div>
   )
 }
