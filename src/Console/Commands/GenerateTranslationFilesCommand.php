@@ -18,11 +18,17 @@ class GenerateTranslationFilesCommand extends Command
     public function handle()
     {
         $languageLines = LanguageLine::get();
+        $defaults = [
+            'en' => json_decode(File::get(__DIR__.'/../../../lang/en.json'), true)
+        ];
 
         $filePaths = (
             collect(config('app.supported_locales'))
-                ->map(function ($locale) use ($languageLines) {
-                    $translations = (
+                ->map(function ($locale) use ($languageLines, $defaults) {
+
+                    $translations = collect($defaults[$locale] ?? []);
+
+                    $translations = $translations->merge(
                         $languageLines
                             ->filter(fn ($languageLine) => $languageLine->text[$locale] ?? false)
                             ->map(fn ($languageLine) => [
@@ -36,7 +42,7 @@ class GenerateTranslationFilesCommand extends Command
                     }
 
                     File::put(
-                        $path = lang_path("{$locale}.json"),
+                        lang_path("{$locale}.json"),
                         json_encode($translations->toArray(), JSON_PRETTY_PRINT)
                     );
 

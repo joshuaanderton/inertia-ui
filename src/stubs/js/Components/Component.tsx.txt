@@ -4,12 +4,12 @@ interface Props extends PropsWithChildren {
   // ...
 }
 
-const {{ page_name }}: React.FC<Props> = () => {
+const {{ name }}: React.FC<Props> = ({ children }) => {
   return (
     <>
-      {/* ... */}
+      {children}
     </>
   )
 }
 
-export default {{ page_name }}
+export default {{ name }}

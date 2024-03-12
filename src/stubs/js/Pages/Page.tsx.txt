@@ -1,0 +1,19 @@
+import React from 'react'
+import useRoute from '@inertia-ui/Hooks/useRoute'
+
+interface PageProps extends InertiaSharedProps {
+  //...
+}
+
+const {{ name }}: React.FC<PageProps> = ({ }) => {
+
+  const route = useRoute()
+
+  return (
+    <>
+      {/* ... */}
+    </>
+  )
+}
+
+export default {{ name }}

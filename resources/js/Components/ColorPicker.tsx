@@ -21,7 +21,6 @@ const ColorPicker: React.FC<{ value: string, onChange: (event: any) => void, id?
         {...props}
         className="pl-10"
         value={value || ''}
-        placeholder="#6875F5"
         onChange={onChange} />
     </div>
   )

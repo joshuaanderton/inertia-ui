@@ -16,7 +16,7 @@ export interface ModelPagination extends Pagination {
 }
 
 interface Props {
-  titles: {[hash: string]: string|{label: string, value: (item: ModelRow) => string|number|React.JSX.Element}}
+  titles: {[hash: string]: string|{label: string|null, value: (item: ModelRow) => string|number|React.JSX.Element}}
   pagination: ModelPagination
   selected?: ModelRow[]
   fixedHeader?: boolean
@@ -88,7 +88,7 @@ const ModelTable: React.FC<Props> = ({
 
   return (
     <div className={classNames('flex-1 flex flex-col px-4 md:px-6', props.className)}>
-      <div className="flex-1 -mx-3 flex flex-col">
+      <div className="flex-1 -mx-4 md:-mx-6 flex flex-col">
         <table className="relative min-w-full table-fixed divide-y site-divide border-b site-border">
 
           {titles && (
@@ -107,37 +107,44 @@ const ModelTable: React.FC<Props> = ({
                   </th>
                 )}
 
-                {Object.entries(titles).map(([field, title], titleIdx) => (
-                  <th
-                    key={`${titleIdx}-header`}
-                    scope="col"
-                    className={classNames(
-                      !fixedHeader ? [] : [
-                        'sticky',
-                        'top-0',
-                        'z-10',
-                        'bg-gradient-to-t',
-                        'from-chrome-100',
-                        'to-white'
-                      ], [
-                        'relative',
-                        'py-3.5',
-                        'px-3',
-                        'text-left',
-                        'text-sm',
-                        'font-semibold',
-                        `${field}-cell`
-                      ]
-                    )}
-                  >
-                    {titleIdx === 0 && selectedItems.length > 0 && typeof bulkActions !== 'boolean' && (
-                      <div className="absolute site-bg whitespace-nowrap top-2 z-20 flex items-center space-x-3">
-                        {bulkActions?.()}
-                      </div>
-                    )}
-                    <Heading title={typeof title === 'string' ? title : title.label} type="h4" size="sm" className="whitespace-nowrap" />
-                  </th>
-                ))}
+                {Object.entries(titles).map(([field, title], titleIdx) => {
+
+                  const label = typeof title === 'string' ? title : title.label
+
+                  return (
+                    <th
+                      key={`${titleIdx}-header`}
+                      scope="col"
+                      className={classNames(
+                        !fixedHeader ? [] : [
+                          'sticky',
+                          'top-0',
+                          'z-10',
+                          'bg-gradient-to-t',
+                          'from-chrome-100',
+                          'to-white'
+                        ], [
+                          'relative',
+                          'py-3.5',
+                          'px-3',
+                          'text-left',
+                          'text-sm',
+                          'font-semibold',
+                          `${field}-cell`
+                        ]
+                      )}
+                    >
+                      {titleIdx === 0 && selectedItems.length > 0 && typeof bulkActions !== 'boolean' && (
+                        <div className="absolute site-bg whitespace-nowrap top-2 z-20 flex items-center space-x-3">
+                          {bulkActions?.()}
+                        </div>
+                      )}
+                      {label && (
+                        <Heading title={label} type="h4" size="sm" className="whitespace-nowrap" />
+                      )}
+                    </th>
+                  )
+                })}
 
                 {!!actions && <th></th>}
 

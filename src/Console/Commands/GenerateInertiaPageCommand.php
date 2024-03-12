@@ -3,19 +3,15 @@
 namespace Ja\InertiaUI\Console\Commands;
 
 use Illuminate\Console\Command;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Schema;
 
 class GenerateInertiaPageCommand extends Command
 {
-    protected $signature = 'inertia-ui:make:page {name} {--jsx}';
+    protected $signature = 'inertia-ui:make:page {name}';
 
     protected $description = 'Generate new blank Inertia page template';
 
-    protected string $pageName;
-
-    protected string $pageExt;
+    protected string $componentName;
 
     /**
      * Execute the console command.
@@ -24,30 +20,37 @@ class GenerateInertiaPageCommand extends Command
     {
         $name = str($this->argument('name'))->studly();
 
-        $this->pageName = basename($name);
+        $this->componentName = basename($name);
 
-        $pagePath = dirname($name);
-
-        $this->pageExt = $this->option('jsx') ? 'jsx' : 'tsx';
+        $path = dirname($name);
 
         // Create directory for file
-        File::ensureDirectoryExists(resource_path("js/Pages/{$pagePath}"));
+        File::ensureDirectoryExists(resource_path("js/Pages/{$path}"));
 
-        $pagePath = "{$pagePath}/{$this->pageName}.{$this->pageExt}";
+        $path = "{$path}/{$this->componentName}.tsx";
 
         // Write file using stub
         File::put(
-            resource_path("js/Pages/{$pagePath}"),
-            $this->pageStub()
+            resource_path("js/Pages/{$path}"),
+            $this->stub()
         );
 
-        $this->comment("Inertia page generated at resources/js/Pages/{$this->pageName}");
+        $this->comment("Inertia page generated at resources/js/Pages/{$this->componentName}");
     }
 
-    protected function pageStub()
+    protected function stub()
     {
-        $stub = File::get(__DIR__."/../../stubs/inertia-page.{$this->pageExt}.txt");
+        $stub = File::get(__DIR__."/../../stubs/js/Pages/Page.tsx.txt");
+        $stub = str($stub);
+        $stub = $stub->replace('{{ name }}', $this->componentName);
 
-        return str($stub)->replace('{{ page_name }}', $this->pageName);
+        if ($this->option('form')) {
+            $formMethod = 'post'; // post, put, delete, get
+            $formRoute = '';
+            $stub = $stub->replace('{{ form_route }}', $formRoute);
+            $stub = $stub->replace('{{ form_method }}', $formMethod);
+        }
+
+        return $stub->toString();
     }
 }

@@ -1,0 +1,35 @@
+import React from 'react'
+import { useForm } from "@inertiajs/react"
+import useTypedPage from '@inertia-ui/Hooks/useTypedPage'
+import { InertiaSharedProps } from '@inertia-ui/jetstream-types'
+import useRoute from '@inertia-ui/Hooks/useRoute'
+
+interface PageProps extends InertiaSharedProps {
+  //...
+}
+
+interface FormData {
+  //...
+}
+
+const {{ name }}: React.FC = () => {
+
+  const { } = useTypedPage<PageProps>().props,
+        route = useRoute(),
+        form = useForm<FormData>({
+          //...
+        })
+
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault()
+    form.{{ form_method }}(route('{{ form_route }}'))
+  }
+
+  return (
+    <>
+      {/* ... */}
+    </>
+  )
+}
+
+export default {{ name }}

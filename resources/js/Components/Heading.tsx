@@ -56,9 +56,11 @@ const Heading: React.FC<Props> = ({ title, count = 0, lang, size, className, typ
         {titleText} {count > 0 ? `(${count})` : null}
       </HeadingElement>
 
-      <AdminTranslationsModalTrigger
-        className="opacity-0 group-hover:opacity-100"
-        languageLines={[{ key: lang, text: titleText }]} />
+      <div className="relative">
+        <AdminTranslationsModalTrigger
+          className="absolute top-0 left-0 opacity-0 group-hover:opacity-100"
+          languageLines={[{ key: lang, text: titleText }]} />
+      </div>
     </div>
   )
 }

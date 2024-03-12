@@ -5,6 +5,7 @@ interface Props extends PropsWithChildren {
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void
   value?: string | number
   size?: "sm"
+  name?: string
   options?: { value: string | number, label: string }[]
   className?: string
   disabled?: boolean
