@@ -2,7 +2,9 @@
 
 namespace Ja\InertiaUI\Actions;
 
+use Exception;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Spatie\TranslationLoader\LanguageLine;
@@ -11,41 +13,60 @@ class GenerateTranslationFiles
 {
     use AsAction;
 
+    private function packageLangPath(string ...$path)
+    {
+        return collect(__DIR__."/../../lang")->concat($path)->flatten()->join('/');
+    }
+
     public function handle(): Collection
     {
         $languageLines = LanguageLine::get();
-        $defaults = [
-            'en' => json_decode(File::get(__DIR__.'/../../lang/en.json'), true)
-        ];
+        $locales = (
+            $languageLines
+                ->whereNotNull('text')
+                ->pluck('text')
+                ->map(fn ($text) => array_keys($text))
+                ->flatten()
+                ->unique()
+        );
 
         $filePaths = (
-            collect(config('app.supported_locales'))
-                ->map(function ($locale) use ($languageLines, $defaults) {
+            collect($locales)->map(function ($locale) use ($languageLines) {
 
-                    $translations = collect($defaults[$locale] ?? []);
+                $default = null;
 
-                    $translations = $translations->merge(
-                        $languageLines
-                            ->filter(fn ($languageLine) => $languageLine->text[$locale] ?? false)
-                            ->map(fn ($languageLine) => [
-                                "{$languageLine->group}.{$languageLine->key}" => $languageLine->text[$locale]
-                            ])
-                            ->collapse()
-                    );
+                try {
+                    $default = json_decode(File::get($this->packageLangPath("{$locale}.json")), true);
+                } catch (Exception $e) {
+                    //
+                }
 
-                    if ($translations->count() === 0) {
-                        return null;
-                    }
+                $translations = collect($default);
 
-                    File::put(
-                        lang_path("{$locale}.json"),
-                        json_encode($translations->toArray(), JSON_PRETTY_PRINT)
-                    );
+                $translations = $translations->merge(
+                    $languageLines
+                        ->filter(fn ($languageLine) => $languageLine->text[$locale] ?? false)
+                        ->map(fn ($languageLine) => [
+                            "{$languageLine->group}.{$languageLine->key}" => $languageLine->text[$locale]
+                        ])
+                        ->collapse()
+                );
 
-                    return "lang/{$locale}.json";
-                })
-                ->whereNotNull()
+                if ($translations->count() === 0) {
+                    return null;
+                }
+
+                File::put(
+                    $this->packageLangPath('generated', "{$locale}.json"),
+                    json_encode($translations->toArray(), JSON_PRETTY_PRINT)
+                );
+
+                return $locale;
+            })
+            ->whereNotNull()
         );
+
+        Artisan::call('view:clear');
 
         return $filePaths;
     }

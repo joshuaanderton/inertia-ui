@@ -1,8 +1,18 @@
-import translations from '@/../../lang/en.json?raw'
+interface Translations {[key: string]: string}
+
+interface TranslationsConfig {[key: string]: Translations}
+
+let translations: TranslationsConfig
 
 export const lang = (key: string, props?: {[key: string]: string|number}, fallback?: string): string => {
 
-  let translated = JSON.parse(translations)[key] || null
+  const locale = document?.documentElement?.lang || 'en'
+
+  if (!translations) {
+    translations = (window as any).Translations || {}
+  }
+
+  let translated = translations[locale][key] || ''
 
   if (!translated) {
     translated = fallback !== undefined
@@ -17,8 +27,4 @@ export const lang = (key: string, props?: {[key: string]: string|number}, fallba
   }
 
   return translated
-}
-
-export default function useLang(): typeof lang {
-  return lang
 }
