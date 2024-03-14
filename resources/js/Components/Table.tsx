@@ -79,7 +79,7 @@ const Table: React.FC<Props> = ({
                     'py-3.5 px-3 text-left text-sm font-semibold',
                     hideForMobile ? 'hidden md:table-cell' : '',
                   )}>
-                    <Heading title={value} type="h4" size="sm" className="whitespace-nowrap" disableTranslationsEditor />
+                    <Heading title={value} type="h4" size="sm" className="whitespace-nowrap" />
                   </th>
                 )
               })}
