@@ -66,8 +66,6 @@ class GenerateTranslationFiles
             ->whereNotNull()
         );
 
-        Artisan::call('view:clear');
-
         return $filePaths;
     }
 }
