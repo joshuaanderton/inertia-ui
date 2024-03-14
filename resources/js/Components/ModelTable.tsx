@@ -140,7 +140,7 @@ const ModelTable: React.FC<Props> = ({
                         </div>
                       )}
                       {label && (
-                        <Heading title={label} type="h4" size="sm" className="whitespace-nowrap" disableTranslationsEditor />
+                        <Heading title={label} type="h4" size="sm" className="whitespace-nowrap" />
                       )}
                     </th>
                   )
