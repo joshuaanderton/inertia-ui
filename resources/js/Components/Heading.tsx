@@ -7,12 +7,13 @@ interface Props {
   title: string
   count?: number
   lang?: string
+  disableTranslationsEditor?: true
   type?: "h1"|"h2"|"h3"|"h4"|"h5"
   size?: "sm"|"lg"
   className?: string
 }
 
-const Heading: React.FC<Props> = ({ title, count = 0, lang, size, className, type = "h3" }) => {
+const Heading: React.FC<Props> = ({ title, count = 0, lang, size, className, type = "h3", disableTranslationsEditor }) => {
 
   lang = lang || `default.${title.toLowerCase().replaceAll(' ', '_')}`
 
@@ -56,11 +57,13 @@ const Heading: React.FC<Props> = ({ title, count = 0, lang, size, className, typ
         {titleText} {count > 0 ? `(${count})` : null}
       </HeadingElement>
 
-      <div className="relative">
-        <AdminTranslationsModalTrigger
-          className="absolute top-0 left-0 opacity-0 group-hover:opacity-100"
-          languageLines={[{ key: lang, text: titleText }]} />
-      </div>
+      {disableTranslationsEditor !== true && (
+        <div className="relative">
+          <AdminTranslationsModalTrigger
+            className="absolute top-0 left-0 opacity-0 group-hover:opacity-100"
+            languageLines={[{ key: lang, text: titleText }]} />
+        </div>
+      )}
     </div>
   )
 }
