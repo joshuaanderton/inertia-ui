@@ -45,7 +45,7 @@ const Multiselect: React.FC<Props> = ({
 
   return (
     <Combobox value={values} onChange={handleChange} multiple>
-      <div className="site-input min-h-[1.5rem] focus-within:ring-2 focus-within:ring-primary-500 relative flex flex-wrap items-center w-full">
+      <div className="site-input min-h-[2.6rem] focus-within:ring-2 focus-within:ring-primary-500 relative flex flex-wrap items-center w-full">
 
         {/* Preview Tags */}
         <div className="px-2 py-1.5 flex flex-wrap items-center gap-1.5 w-full">
