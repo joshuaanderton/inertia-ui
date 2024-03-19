@@ -3,7 +3,6 @@
 namespace Ja\InertiaUI\Providers;
 
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Ja\InertiaUI\Actions\GetTranslations;
 use Ja\InertiaUI\Console\Commands\GenerateInertiaComponentCommand;
@@ -28,7 +27,7 @@ class ServiceProvider extends BaseServiceProvider
             $this->commands([
                 GenerateTypescriptTypesCommand::class,
                 GenerateInertiaPageCommand::class,
-                GenerateInertiaComponentCommand::class
+                GenerateInertiaComponentCommand::class,
             ]);
         }
 

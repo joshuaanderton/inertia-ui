@@ -4,7 +4,6 @@ namespace Ja\InertiaUI\Actions;
 
 use Exception;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\File;
 use Lorisleiva\Actions\Concerns\AsAction;
 use Spatie\TranslationLoader\LanguageLine;
@@ -15,7 +14,7 @@ class GenerateTranslationFiles
 
     private function packageLangPath(string ...$path)
     {
-        return collect(__DIR__."/../../lang")->concat($path)->flatten()->join('/');
+        return collect(__DIR__.'/../../lang')->concat($path)->flatten()->join('/');
     }
 
     public function handle(): Collection
@@ -47,7 +46,7 @@ class GenerateTranslationFiles
                     $languageLines
                         ->filter(fn ($languageLine) => $languageLine->text[$locale] ?? false)
                         ->map(fn ($languageLine) => [
-                            "{$languageLine->group}.{$languageLine->key}" => $languageLine->text[$locale]
+                            "{$languageLine->group}.{$languageLine->key}" => $languageLine->text[$locale],
                         ])
                         ->collapse()
                 );
@@ -63,7 +62,7 @@ class GenerateTranslationFiles
 
                 return $locale;
             })
-            ->whereNotNull()
+                ->whereNotNull()
         );
 
         return $filePaths;

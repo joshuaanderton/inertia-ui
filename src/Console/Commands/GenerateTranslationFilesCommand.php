@@ -2,8 +2,8 @@
 
 namespace Ja\InertiaUI\Console\Commands;
 
-use Ja\InertiaUI\Actions\GenerateTranslationFiles;
 use Illuminate\Console\Command;
+use Ja\InertiaUI\Actions\GenerateTranslationFiles;
 
 class GenerateTranslationFilesCommand extends Command
 {
@@ -18,6 +18,6 @@ class GenerateTranslationFilesCommand extends Command
     {
         $filePaths = GenerateTranslationFiles::run();
 
-        $this->comment($filePaths->count() . ' translation file(s) generated');
+        $this->comment($filePaths->count().' translation file(s) generated');
     }
 }

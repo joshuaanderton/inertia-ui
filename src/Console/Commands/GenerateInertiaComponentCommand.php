@@ -40,7 +40,7 @@ class GenerateInertiaComponentCommand extends Command
 
     protected function stub()
     {
-        $stub = File::get(__DIR__."/../../stubs/js/Components/Component.tsx.txt");
+        $stub = File::get(__DIR__.'/../../stubs/js/Components/Component.tsx.txt');
 
         return str($stub)->replace('{{ name }}', $this->componentName);
     }

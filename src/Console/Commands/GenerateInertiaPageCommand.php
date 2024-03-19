@@ -40,7 +40,7 @@ class GenerateInertiaPageCommand extends Command
 
     protected function stub()
     {
-        $stub = File::get(__DIR__."/../../stubs/js/Pages/Page.tsx.txt");
+        $stub = File::get(__DIR__.'/../../stubs/js/Pages/Page.tsx.txt');
         $stub = str($stub);
         $stub = $stub->replace('{{ name }}', $this->componentName);
 
