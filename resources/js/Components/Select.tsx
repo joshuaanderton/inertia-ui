@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import React, { PropsWithChildren, useEffect, useState } from 'react'
+import { PropsWithChildren, useEffect, useState } from 'react'
 
 interface Props extends PropsWithChildren {
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void
@@ -41,10 +41,11 @@ const Select: React.FC<Props> = ({
     <select
       value={selected}
       onChange={handleSelected}
-      className={classNames([
+      className={classNames({
+        'py-1 !text-sm': size === 'sm',
+        '!h-[2.6rem]': !size
+      }, [
         'site-input',
-        size === 'sm' ? 'py-1 !text-sm' : 'py-2',
-        'leading-5',
         'max-w-full',
       ], className)}
       {...props}

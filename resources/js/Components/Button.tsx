@@ -1,12 +1,13 @@
-import React, { PropsWithChildren } from 'react'
+import { PropsWithChildren } from 'react'
 import classNames from 'classnames'
 import { Link } from '@inertiajs/react'
 import LoadingIcon from '@inertia-ui/Components/Icons/LoadingIcon'
-import { ChevronDownIcon, ChevronUpDownIcon } from '@heroicons/react/24/outline'
+import { ChevronUpDownIcon } from '@heroicons/react/24/outline'
 
 export interface DefaultButtonProps extends PropsWithChildren {
   as?: "span"|"button"|"Link"
   text?: string
+  form?: string
   href?: string
   target?: string // When href !== undefined
   onClick?: (event: React.MouseEvent) => void

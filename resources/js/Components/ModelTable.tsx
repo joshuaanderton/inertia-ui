@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import classNames from 'classnames'
 import { lang as __ } from '@inertia-ui/Hooks/useLang'
 import Heading from '@inertia-ui/Components/Heading'

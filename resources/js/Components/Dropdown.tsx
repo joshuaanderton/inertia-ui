@@ -1,6 +1,6 @@
 import { Transition } from '@headlessui/react'
 import classNames from 'classnames'
-import React, { PropsWithChildren, useState } from 'react'
+import { PropsWithChildren, useState } from 'react'
 import SecondaryButton from '@/Components/Buttons/SecondaryButton'
 
 export interface DropdownProps extends PropsWithChildren {

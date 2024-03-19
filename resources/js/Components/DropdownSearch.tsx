@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import Dropdown, { DropdownProps } from '@inertia-ui/Components/Dropdown'
 import DropdownLink from '@inertia-ui/Components/DropdownLink'
 import { lang as __ } from '@inertia-ui/Hooks/useLang'

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { lang as __ } from '@inertia-ui/Hooks/useLang'
 import { PaperClipIcon } from '@heroicons/react/20/solid'
 import PrimaryButton from '@/Components/Buttons/PrimaryButton'

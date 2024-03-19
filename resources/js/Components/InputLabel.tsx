@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import React, { PropsWithChildren } from 'react'
+import { PropsWithChildren } from 'react'
 
 interface Props extends PropsWithChildren {
   value?: string
