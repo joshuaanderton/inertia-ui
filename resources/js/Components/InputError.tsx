@@ -14,10 +14,8 @@ export default function InputError({
     return null;
   }
   return (
-    <div className={`${className} text-xs`}>
-      <p className="text-red-600 dark:text-red-400">
-        {message || children}
-      </p>
+    <div className={`${className} text-xs text-red-600 dark:text-red-400`}>
+      {message || children}
     </div>
   );
 }
