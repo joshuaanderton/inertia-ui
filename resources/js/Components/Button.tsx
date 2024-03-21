@@ -39,7 +39,7 @@ const Button: React.FC<DefaultButtonProps> = ({
   const sizeClassNames: any = {
     xs: [
       'font-normal',
-      'text-sm',
+      'text-xs',
       'px-3',
       'py-1',
     ],

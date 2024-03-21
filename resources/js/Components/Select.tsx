@@ -9,6 +9,7 @@ interface Props extends PropsWithChildren {
   options?: { value: string | number, label: string }[]
   className?: string
   disabled?: boolean
+  required?: boolean
 }
 
 const Select: React.FC<Props> = ({
