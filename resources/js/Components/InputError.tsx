@@ -1,21 +1,25 @@
-import { PropsWithChildren } from 'react';
+import { PropsWithChildren } from 'react'
 
-interface Props {
-  message?: string;
-  className?: string;
+interface Props extends PropsWithChildren {
+  message?: string
+  overlay?: boolean
+  className?: string
 }
 
-export default function InputError({
+const InputError: React.FC<Props> = ({
   message,
   className = '',
+  overlay = false,
   children,
-}: PropsWithChildren<Props>) {
+}) => {
   if (!message && !children) {
-    return null;
+    return null
   }
   return (
-    <div className={`${className} text-xs text-red-600 dark:text-red-400`}>
-      {message || children}
+    <div className={`${className} relative text-xs font-medium text-red-600 dark:text-red-400`}>
+      <span className={overlay ? 'absolute top-0 left-0' : ''}>{message || children}</span>
     </div>
-  );
+  )
 }
+
+export default InputError
