@@ -1,9 +1,9 @@
 <?php
 
 if (! function_exists('inertia_ui_path')) {
-    function inertia_ui_path(): string
+    function inertia_ui_path(string ...$path): string
     {
-        return __DIR__.'/../';
+        return collect(str(__DIR__)->rtrim('/src'))->concat($path)->flatten()->join('/');
     }
 }
 
