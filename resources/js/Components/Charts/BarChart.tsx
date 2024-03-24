@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -47,6 +47,8 @@ const BarChart: React.FC<BarChartProps> = ({ data, horizontal = false }) => {
     datasets: []
   }
 
+  const wrap = useRef<HTMLDivElement>(null)
+
   data.forEach(({ label, dataset }, datasetIdx) => {
 
     if (datasetIdx === 0) {
@@ -79,7 +81,11 @@ const BarChart: React.FC<BarChartProps> = ({ data, horizontal = false }) => {
     options.indexAxis = 'y' as const
   }
 
-  return <Bar options={options} data={chartDataset} />
+  return (
+    <div ref={wrap} className="w-full relative h-0 pb-[56%] [&>canvas]:absolute [&>canvas]:inset-0">
+      <Bar options={options} data={chartDataset} />
+    </div>
+  )
 }
 
 export default BarChart

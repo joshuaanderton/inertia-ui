@@ -52,7 +52,7 @@ const Multiselect: React.FC<Props> = ({
 
           {values.map((sop) => (
             <PrimaryButton
-              key={sop.label}
+              key={sop.value}
               size="xs"
               className="group rounded-full"
               type="button"

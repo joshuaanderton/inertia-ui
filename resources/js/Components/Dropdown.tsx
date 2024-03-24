@@ -5,6 +5,7 @@ import SecondaryButton from '@/Components/Buttons/SecondaryButton'
 
 export interface DropdownProps extends PropsWithChildren {
   right?: boolean
+  up?: boolean
   className?: string
   triggerClassName?: string
   triggerText?: string|(() => JSX.Element)
@@ -17,6 +18,7 @@ export interface DropdownProps extends PropsWithChildren {
 
 const Dropdown: React.FC<DropdownProps> = ({
   right = false,
+  up = false,
   className,
   triggerClassName,
   triggerText,
@@ -30,11 +32,36 @@ const Dropdown: React.FC<DropdownProps> = ({
 
   const [open, setOpen] = useState(false)
 
-  className = classNames('absolute mt-2 rounded shadow-lg', {
+  const originClassName = up ? {
+    'origin-bottom-right right-0 bottom-full': right,
+    'origin-bottom-left left-0 bottom-full': !right,
+    'w-48': !className?.includes('w-'),
+  } : {
     'origin-top-right right-0': right,
     'origin-top-left left-0': !right,
     'w-48': !className?.includes('w-'),
-  }, className)
+  }
+
+  className = classNames([
+      'absolute',
+      'mt-2',
+      'rounded',
+      'shadow-lg',
+      'rounded-lg',
+      'ring-1',
+      'ring-black',
+      'ring-opacity-5',
+      'py-1',
+      'bg-white',
+      'dark:bg-chrome-900',
+      'max-h-64',
+      'overflow-y-scroll'
+    ], {
+      'w-48' : !className?.includes('w-')
+    },
+    originClassName,
+    className
+  )
 
   return (
     <div className="relative">
@@ -71,9 +98,7 @@ const Dropdown: React.FC<DropdownProps> = ({
         className={'relative z-50'}
       >
         <div className={className} onClick={() => closeOnSelect ? setOpen(false) : null}>
-          <div className="rounded-lg ring-1 ring-black ring-opacity-5 py-1 bg-white dark:bg-chrome-900 max-h-64 overflow-y-scroll">
-            {children}
-          </div>
+          {children}
         </div>
       </Transition>
     </div>

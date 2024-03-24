@@ -17,7 +17,7 @@ const InputError: React.FC<Props> = ({
   }
   return (
     <div className={`${className} relative text-xs font-medium text-red-600 dark:text-red-400`}>
-      <span className={overlay ? 'absolute top-0 left-0' : ''}>{message || children}</span>
+      <span className={overlay ? 'absolute z-[5] h-0 top-0 left-0' : ''}>{message || children}</span>
     </div>
   )
 }
