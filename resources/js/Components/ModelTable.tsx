@@ -87,7 +87,7 @@ const ModelTable: React.FC<Props> = ({
   }
 
   return (
-    <div className={classNames('overflow-x-scroll flex-1 flex flex-col px-4 md:px-6', props.className)}>
+    <div className={classNames('overflow-x-scroll md:overflow-visible flex-1 flex flex-col px-4 md:px-6', props.className)}>
       <div className="flex-1 -mx-4 md:-mx-6 flex flex-col">
         <table className="relative min-w-full table-fixed divide-y site-divide border-b site-border">
 
