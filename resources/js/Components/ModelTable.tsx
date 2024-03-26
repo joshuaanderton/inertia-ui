@@ -16,7 +16,7 @@ export interface ModelPagination extends Pagination {
 }
 
 interface Props {
-  titles: {[hash: string]: string|{label: string|null, value: (item: ModelRow) => string|number|React.JSX.Element}}
+  titles: {[hash: string]: string|{label: string|null, value: (item: any) => string|number|React.JSX.Element}}
   pagination: ModelPagination
   selected?: ModelRow[]
   fixedHeader?: boolean
