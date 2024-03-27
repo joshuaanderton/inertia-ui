@@ -82,7 +82,7 @@ const BarChart: React.FC<BarChartProps> = ({ data, horizontal = false }) => {
   }
 
   return (
-    <div ref={wrap} className="w-full relative h-0 pb-[56%] [&>canvas]:absolute [&>canvas]:inset-0">
+    <div ref={wrap} className="w-full relative h-0 pb-[52%] [&>canvas]:absolute [&>canvas]:inset-0">
       <Bar options={options} data={chartDataset} />
     </div>
   )
