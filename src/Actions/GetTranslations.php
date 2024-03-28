@@ -10,13 +10,21 @@ class GetTranslations
 {
     use AsAction;
 
-    public function handle(): Collection
+    public function handle(?string $locale = null): array
     {
-        return collect(File::allFiles(__DIR__.'/../../lang/generated'))->map(function ($file) {
-            $locale = str($realPath = $file->getRealPath())->basename()->remove('.json')->toString();
-            $content = json_decode(File::get($realPath));
+        $locale = $locale ?: app()->getLocale();
+        $defaultLocale = 'en';
 
-            return [$locale => $content];
-        })->collapse();
+        try {
+            return [$locale => json_decode(File::get($this->langPath($locale)))];
+        } catch (\Exception $e) {
+            return [$defaultLocale => json_decode(File::get($this->langPath($defaultLocale)))];
+        }
+    }
+
+    private function langPath(string $locale): string
+    {
+        $locale = str($locale)->explode('.')->first();
+        return __DIR__."/../../lang/generated/{$locale}.json";
     }
 }

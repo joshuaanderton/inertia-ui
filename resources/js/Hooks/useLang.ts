@@ -1,17 +1,12 @@
-// interface Translations {[key: string]: string}
-// interface TranslationsConfig {[key: string]: Translations}
+interface Translations {[key: string]: string}
 
-let translations: any
+let translations: Translations = {}
+
+export const setTranslations = (config: Translations) => translations = config
 
 export const lang = (key: string, props?: {[key: string]: string|number}, fallback?: string): string => {
 
-  if (!translations) {
-    translations = (window as any).Translations || {}
-  }
-
-  let locale = document?.documentElement?.lang || 'en',
-      localeTranslations = locale in translations ? translations[locale] : {},
-      translated = localeTranslations[key] || ''
+  let translated = translations[key] || ''
 
   if (!translated) {
     translated = fallback !== undefined
@@ -27,3 +22,5 @@ export const lang = (key: string, props?: {[key: string]: string|number}, fallba
 
   return translated
 }
+
+export default lang
