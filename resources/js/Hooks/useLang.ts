@@ -1,5 +1,3 @@
-import { get } from 'lodash'
-
 // interface Translations {[key: string]: string}
 // interface TranslationsConfig {[key: string]: Translations}
 
