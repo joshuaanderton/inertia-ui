@@ -1,18 +1,19 @@
-interface Translations {[key: string]: string}
+import { get } from 'lodash'
 
-interface TranslationsConfig {[key: string]: Translations}
+// interface Translations {[key: string]: string}
+// interface TranslationsConfig {[key: string]: Translations}
 
-let translations: TranslationsConfig
+let translations: any
 
 export const lang = (key: string, props?: {[key: string]: string|number}, fallback?: string): string => {
-
-  const locale = document?.documentElement?.lang || 'en'
 
   if (!translations) {
     translations = (window as any).Translations || {}
   }
 
-  let translated = translations[locale][key] || ''
+  let locale = document?.documentElement?.lang || 'en',
+      localeTranslations = locale in translations ? translations[locale] : {},
+      translated = localeTranslations[key] || ''
 
   if (!translated) {
     translated = fallback !== undefined
