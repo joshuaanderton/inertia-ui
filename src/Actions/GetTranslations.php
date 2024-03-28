@@ -16,15 +16,23 @@ class GetTranslations
         $defaultLocale = 'en';
 
         try {
-            return [$locale => json_decode(File::get($this->langPath($locale)))];
+            return [$locale => json_decode(File::get($this->langPath('cache/'.$locale)))];
         } catch (\Exception $e) {
-            return [$defaultLocale => json_decode(File::get($this->langPath($defaultLocale)))];
+            //
         }
+
+        try {
+            return [$defaultLocale => json_decode(File::get($this->langPath('cache/'.$defaultLocale)))];
+        } catch (\Exception $e) {
+            //
+        }
+
+        return [$defaultLocale => json_decode(File::get($this->langPath($defaultLocale)))];
     }
 
     private function langPath(string $locale): string
     {
         $locale = str($locale)->explode('.')->first();
-        return __DIR__."/../../lang/generated/{$locale}.json";
+        return __DIR__."/../../lang/{$locale}.json";
     }
 }
