@@ -4,6 +4,7 @@ import { lang as __ } from '@inertia-ui/Hooks/useLang'
 import Heading from '@inertia-ui/Components/Heading'
 import { Link } from '@inertiajs/react'
 import { Pagination } from '@inertia-ui/jetstream-types'
+import TertiaryButton from '@/Components/Buttons/TertiaryButton'
 
 interface BaseModelRow {[hash: string]: number|string|boolean|(() => JSX.Element)}
 
@@ -23,6 +24,7 @@ interface Props {
   actions?:(item: ModelRow) => JSX.Element
   bulkActions?(): JSX.Element
   onSelect?(selected: ModelRow[]): void
+  disablePagination?: boolean
   breakpoints?: {
     mobile: string[]
     tablet: string[]
@@ -37,6 +39,7 @@ const ModelTable: React.FC<Props> = ({
   selected,
   breakpoints,
   fixedHeader = false,
+  disablePagination = false,
   actions,
   bulkActions,
   onSelect,
@@ -203,7 +206,7 @@ const ModelTable: React.FC<Props> = ({
           </tbody>
         </table>
 
-        {pagination && (
+        {!disablePagination && pagination && pagination.total > pagination.data.length && (
           <div className="mt-auto w-full p-3 gap-x-3 flex whitespace-nowrap flex-nowrap justify-end">
             <span className="site-text-muted text-sm font-medium">
               {__('Showing')} {pagination.data.length} {__('of')} {pagination.total}
@@ -227,6 +230,7 @@ const ModelTable: React.FC<Props> = ({
             )}
           </div>
         )}
+
       </div>
     </div>
   )
