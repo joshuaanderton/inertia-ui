@@ -3,8 +3,10 @@
 namespace Ja\InertiaUI\Actions;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\File;
 use Lorisleiva\Actions\Concerns\AsAction;
+use Spatie\TranslationLoader\LanguageLine;
 
 class GetTranslations
 {
@@ -12,22 +14,48 @@ class GetTranslations
 
     public function handle(?string $locale = null): array
     {
-        $locale = $locale ?: app()->getLocale();
-        $defaultLocale = 'en';
+        $translations = Cache::get('app_translations', function () use ($locale) {
+            $locale = strtolower($locale ?: app()->getLocale());
+            $defaultLocale = strtolower(config('app.locale', 'en'));
 
+            $translations = $this->getTranslations($locale);
+
+            if ($locale === $defaultLocale) {
+                $translations = $translations->merge($this->getTranslations($defaultLocale));
+            }
+
+            $json = $translations->toJson();
+
+            Cache::put('app_translations', $json);
+
+            return $json;
+        });
+
+        return json_decode($translations, true);
+    }
+
+    public static function flushCache(): void
+    {
+        Cache::forget('app_translations');
+    }
+
+    private function getTranslations(string $locale): Collection
+    {
+        // Get the default translation files
         try {
-            return [$locale => json_decode(File::get($this->langPath('cache/'.$locale)))];
-        } catch (\Exception $e) {
-            //
+            $defaultTranslations = collect(json_decode(File::get($this->langPath($locale)), true));
+        } catch(\Exception $e) {
+            $defaultTranslations = collect();
         }
 
-        try {
-            return [$defaultLocale => json_decode(File::get($this->langPath('cache/'.$defaultLocale)))];
-        } catch (\Exception $e) {
-            //
-        }
+        // Get the translations from the database
+        $translations = LanguageLine::get()
+            ->map(fn ($line) =>
+                ["{$line->group}.{$line->key}" => $line->text[$locale] ?? '']
+            )
+            ->collapse();
 
-        return [$defaultLocale => json_decode(File::get($this->langPath($defaultLocale)))];
+        return $defaultTranslations->merge($translations);
     }
 
     private function langPath(string $locale): string
